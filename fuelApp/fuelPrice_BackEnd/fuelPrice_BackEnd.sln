@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fuelPrice_BackEnd", "fuelPrice_BackEnd\fuelPrice_BackEnd.csproj", "{3812BD2D-B653-4465-8E40-A9528D8F2063}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3812BD2D-B653-4465-8E40-A9528D8F2063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3812BD2D-B653-4465-8E40-A9528D8F2063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3812BD2D-B653-4465-8E40-A9528D8F2063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3812BD2D-B653-4465-8E40-A9528D8F2063}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {399FEC1F-2DBF-45EB-9564-FCCBA9277C41}
+	EndGlobalSection
+EndGlobal
