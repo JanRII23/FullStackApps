@@ -1,11 +1,15 @@
+
 .outer {
     height: 100vh;
-    /* background: linear-gradient(to top, #c9c9ff, #6e6ef6 90%) no-repeat; */
+    background: linear-gradient(to right, #F6D285
+    , #BBF0F3);
 }
 
 .panel-heading{
     text-align: center;
     margin-bottom: 10px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
 #forget{
@@ -37,6 +41,7 @@ a:hover{
     margin-top: 100px;
 }
 
+
 .input-field{
     border-radius: 5px;
     padding: 5px;
@@ -47,17 +52,19 @@ a:hover{
     color: #4343ff;
 }
 
-.input-field.error{
+.form-floating{
+    border-radius: 5px;
+    
+}
+
+.form-floating.error{
     border: 1px solid red;
     color: red;
 }
 
 input[type='text'],
 input[type='password']{
-    border: none;
-    outline: none;
-    box-shadow: none;
-    width: 100%;
+    cursor: pointer;
 }
 
 img{
@@ -68,16 +75,4 @@ img{
     position: relative;
 }
 
-.bordert{
-    border-top: 1px solid #aaa;
-    position: relative;
-}
 
-.bordert:after{
-    content: "or connect with";
-    position: absolute;
-    top: -13px;
-    left: 38%;
-    background-color: white;
-    padding: 0 8px;
-}

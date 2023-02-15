@@ -8,7 +8,11 @@ import { SignupComponent } from './components/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdminDashComponent } from './components/admin-dash/admin-dash.component';
+import { SandBoxComponent } from './components/sand-box/sand-box.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import {MatIcon, MatIconModule} from '@angular/material/icon';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,11 +20,15 @@ import { AdminDashComponent } from './components/admin-dash/admin-dash.component
     SignupComponent,
     DashboardComponent,
     NavbarComponent,
-    AdminDashComponent
+    AdminDashComponent,
+    SandBoxComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
