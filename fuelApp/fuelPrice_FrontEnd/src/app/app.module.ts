@@ -12,6 +12,7 @@ import { SandBoxComponent } from './components/sand-box/sand-box.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatIcon, MatIconModule} from '@angular/material/icon';
+import { ReactiveFormsModule } from '@angular/forms';
  
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {MatIcon, MatIconModule} from '@angular/material/icon';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,
+    ReactiveFormsModule,
     
   ],
   providers: [],

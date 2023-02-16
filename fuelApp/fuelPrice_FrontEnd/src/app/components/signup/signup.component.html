@@ -23,10 +23,10 @@
                         </h2>
                     </div>
                     <div class="panel-body px-5 py-3">
-                        <form>
+                        <form [formGroup]="signupForm">
                             <div class="form-group pt-3">
                                 
-                                <div class="form-floating">
+                                <div class="form-floating" [class.error]="signupForm.controls['username'].dirty && signupForm.hasError('required', 'username')">
                         
                                     <input type="text" id="text" class="form-control" placeholder="text">
                                     <label for="text" class = "form-label text-muted"><span class="align-middle"><mat-icon>person_outline</mat-icon></span>Username</label>
@@ -34,24 +34,28 @@
                                 </div>
                                 
                             </div>
+                            <small *ngIf = "signupForm.controls['username'].dirty && signupForm.hasError('required', 'username')" class="text-danger">*Username is required</small>
 
                             <div class="form-group pt-3">
                                 
-                                <div class="form-floating">
-                                    <input type="password" id="password" class="form-control" placeholder="password">
-                                    <label for="password" class = "form-label text-muted"> <span class="align-middle"><mat-icon>lock</mat-icon></span> Password</label>
+                                <div class="form-floating" (click) = "hideShowPass()" [class.error]="signupForm.controls['password'].dirty && signupForm.hasError('required', 'password')">
+                                    <input [type]="type" id="password" class="form-control" placeholder="password">
+                                    <label for="password" class = "form-label text-muted"> <span class="align-middle"><mat-icon>{{lockIcon}}</mat-icon></span> Password</label>
+                                    
                                 
                                 </div>
                             </div>
+                            <small *ngIf = "signupForm.controls['password'].dirty && signupForm.hasError('required', 'password')" class="text-danger">*Password is required</small>
 
                             <div class="form-group pt-3">
                                 
-                                <div class="form-floating">
-                                    <input type="password" id="password" class="form-control" placeholder="password">
-                                    <label for="password" class = "form-label text-muted"> <span class="align-middle"><mat-icon>lock</mat-icon></span> Verify Password</label>
+                                <div class="form-floating" (click) = "hideShowPass()" [class.error]="signupForm.controls['verifyPassword'].dirty && signupForm.hasError('required', 'verifyPassword')">
+                                    <input [type]="type" id="password" class="form-control" placeholder="password">
+                                    <label for="password" class = "form-label text-muted"> <span class="align-middle"><mat-icon>{{lockIcon}}</mat-icon></span> Verify Password</label>
                                 
                                 </div>
                             </div>
+                            <small *ngIf = "signupForm.controls['verifyPassword'].dirty && signupForm.hasError('required', 'verifyPassword')" class="text-danger">*Password does not match</small>
                            
                             <button type = "submit" class = "btn text-bg-success btn-block mt-4 w-100">Sign Up</button>
                             <div class="text-center pt-4 text-muted">Already have account? <a id="forget" routerLink="/login">Login</a></div>

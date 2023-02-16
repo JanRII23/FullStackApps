@@ -29,27 +29,29 @@
                     </div>
 
                     <div class="panel-body p-5">
-                        <form>
+                        <form [formGroup]="loginForm">
                     
                             <div class="form-group pt-3">
                                 
-                                <div class="form-floating">
+                                <div class="form-floating" [class.error]="loginForm.controls['username'].dirty && loginForm.hasError('required', 'username')">
                         
-                                    <input type="text" id="text" class="form-control" placeholder="text">
+                                    <input type="text" id="text" class="form-control" formControlName = "username" placeholder="text">
                                     <label for="text" class = "form-label text-muted"><span class="align-middle"><mat-icon>person_outline</mat-icon></span>Username</label>
                                 
                                 </div>
                                 
                             </div>
+                            <small *ngIf = "loginForm.controls['username'].dirty && loginForm.hasError('required', 'username')" class="text-danger">*Username is required</small>
 
                             <div class="form-group pt-3">
                                 
-                                <div class="form-floating">
-                                    <input type="password" id="password" class="form-control" placeholder="password">
-                                    <label for="password" class = "form-label text-muted"> <span class="align-middle"><mat-icon>lock</mat-icon></span> Password</label>
+                                <div class="form-floating" (click) = "hideShowPass()" [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')">
+                                    <input [type]="type" id="password" class="form-control" placeholder="password" formControlName = "password">
+                                    <label for="password" class = "form-label text-muted"> <span class="align-middle" ><mat-icon>{{lockIcon}}</mat-icon></span>Password </label>                                  
                                 
                                 </div>
                             </div>
+                            <small *ngIf = "loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')" class="text-danger">*Password is required</small>
 
                             <div class="form-inline fr mt-4">
 
