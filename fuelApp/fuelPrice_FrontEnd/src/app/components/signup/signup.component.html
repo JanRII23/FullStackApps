@@ -28,7 +28,7 @@
                                 
                                 <div class="form-floating" [class.error]="signupForm.controls['username'].dirty && signupForm.hasError('required', 'username')">
                         
-                                    <input type="text" id="text" class="form-control" placeholder="text">
+                                    <input type="text" id="text" class="form-control" formControlName = "username" placeholder="text">
                                     <label for="text" class = "form-label text-muted"><span class="align-middle"><mat-icon>person_outline</mat-icon></span>Username</label>
                                 
                                 </div>
@@ -39,7 +39,7 @@
                             <div class="form-group pt-3">
                                 
                                 <div class="form-floating" (click) = "hideShowPass()" [class.error]="signupForm.controls['password'].dirty && signupForm.hasError('required', 'password')">
-                                    <input [type]="type" id="password" class="form-control" placeholder="password">
+                                    <input [type]="type" id="password" class="form-control" formControlName = "password" placeholder="password">
                                     <label for="password" class = "form-label text-muted"> <span class="align-middle"><mat-icon>{{lockIcon}}</mat-icon></span> Password</label>
                                     
                                 
@@ -50,7 +50,7 @@
                             <div class="form-group pt-3">
                                 
                                 <div class="form-floating" (click) = "hideShowPass()" [class.error]="signupForm.controls['verifyPassword'].dirty && signupForm.hasError('required', 'verifyPassword')">
-                                    <input [type]="type" id="password" class="form-control" placeholder="password">
+                                    <input [type]="type" id="password" class="form-control" formControlName = "verifyPassword" placeholder="password">
                                     <label for="password" class = "form-label text-muted"> <span class="align-middle"><mat-icon>{{lockIcon}}</mat-icon></span> Verify Password</label>
                                 
                                 </div>
