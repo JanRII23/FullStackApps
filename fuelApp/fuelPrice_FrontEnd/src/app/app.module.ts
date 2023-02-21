@@ -12,7 +12,8 @@ import { SandBoxComponent } from './components/sand-box/sand-box.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatIcon, MatIconModule} from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchPipe } from './search.pipe';
  
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     DashboardComponent,
     NavbarComponent,
     AdminDashComponent,
-    SandBoxComponent
+    SandBoxComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     MatIconModule,
     ReactiveFormsModule,
-    
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
