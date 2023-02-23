@@ -18,4 +18,23 @@ export class AdminDashComponent {
 
   searchUser ='';
   searchOrder = '';
+
+  orderTable:boolean = true;
+  orderSearch:boolean = true;
+
+  userTable:boolean = true;
+  userSearch:boolean = true;
+
+  hideTable(x: number){
+  
+    if (x == 1){
+      this.orderSearch = !this.orderSearch;
+      this.orderTable = !this.orderTable;
+    }else{
+      this.userTable = !this.userTable;
+      this.userSearch = !this.userSearch;
+    }
+   
+
+  }
 }
