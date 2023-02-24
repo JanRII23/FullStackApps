@@ -39,81 +39,85 @@
 
                      
 
-                        <form class="row g-2 p-2" *ngIf= "userAccount">
+                        <form class="row g-2 p-2" [formGroup] = "dashboardForm" *ngIf= "userAccount">
                             <div class="col-12 d-flex justify-content-between align-items-center">
                                 <h1 class="text-decoration-underline">My Account</h1>
                               <button type="submit" class="btn btn-success">Update Profile</button>      
                             </div>
                             
-                            <div class="col-md-6">
+                            <div class="col-md-6" [class.error]="dashboardForm.controls['firstName'].dirty && dashboardForm.hasError('required', 'firstName')">
 
-                              <label for="firstName" class="form-label">First Name</label>
-                              <input type="text" class="form-control border border-success" id="firstName">
+                              <label for="firstName" class="form-label d-flex justify-content-between">First Name <small *ngIf = "dashboardForm.controls['firstName'].dirty && dashboardForm.hasError('required', 'firstName')" class="text-danger">*First Name is required</small></label>
+                              <input type="text" class="form-control border border-success" id="firstName" formControlName = "firstName">
+                              
                             </div>
-
-                            <div class="col-md-6">
-                              <label for="lastName" class="form-label">Last Name</label>
-                              <input type="password" class="form-control border border-success" id="lastName">
+                        
+                            <div class="col-md-6" [class.error]="dashboardForm.controls['lastName'].dirty && dashboardForm.hasError('required', 'lastName')">
+                              <label for="lastName" class="form-label d-flex justify-content-between">Last Name  <small *ngIf = "dashboardForm.controls['lastName'].dirty && dashboardForm.hasError('required', 'lastName')" class="text-danger">*Last Name is required</small></label>
+                              <input type="text" class="form-control border border-success" formControlName="lastName" id="lastName">
+                             
                             </div>
                             
-                            <div class="col-12">
-                              <label for="inputAddress1" class="form-label">Address 1</label>
-                              <input type="text" class="form-control border border-success" id="inputAddress1">
+                            <div class="col-12" [class.error]="dashboardForm.controls['addressOne'].dirty && dashboardForm.hasError('required', 'addressOne')">
+                              <label for="inputAddress1" class="form-label d-flex justify-content-between">Address 1     <small *ngIf = "dashboardForm.controls['addressOne'].dirty && dashboardForm.hasError('required', 'addressOne')" class="text-danger">*Address One is required</small></label>
+                              <input type="text" formControlName="addressOne" class="form-control border border-success" id="inputAddress1">
+                          
                             </div>
 
                             <div class="col-12">
                               <label for="inputAddress2" class="form-label">Address 2</label>
-                              <input type="text" class="form-control border border-success" id="inputAddress2">
+                              <input type="text" class="form-control" id="inputAddress2">
                             </div>
 
-                            <div class="col-md-6">
-                              <label for="inputCity" class="form-label">City</label>
-                              <input type="text" class="form-control border border-success" id="inputCity">
+                            <div class="col-md-6" [class.error]="dashboardForm.controls['city'].dirty && dashboardForm.hasError('required', 'city')">
+                              <label for="inputCity" class="form-label d-flex justify-content-between">City <small *ngIf = "dashboardForm.controls['city'].dirty && dashboardForm.hasError('required', 'city')" class="text-danger">*City is required</small></label>
+                              <input type="text" class="form-control border border-success" formControlName="city" id="inputCity">
                             </div>
 
-                            <div class="col-md-4">
-                              <label for="inputState" class="form-label">State</label>
-                              <select id="inputState" class="form-select border border-success">
-                                <option selected>Choose...</option>
-                                <option>...</option>
+                            <div class="col-md-4" [class.error]="dashboardForm.controls['state'].dirty && dashboardForm.hasError('required', 'state')">
+                              <label for="inputState" class="form-label">State <small *ngIf = "dashboardForm.controls['state'].dirty && dashboardForm.hasError('required', 'state')" class="text-danger">*State is required</small></label>
+                              <select id="inputState" class="form-select border border-success" formControlName = "state">
+                                <option selected>New York</option>
+                                <option selected>Texas</option>
                               </select>
                             </div>
 
-                            <div class="col-md-2">
-                              <label for="inputZip" class="form-label">Zip</label>
-                              <input type="number" class="form-control border border-success" id="inputZip">
+                            <div class="col-md-2" [class.error]="dashboardForm.controls['zip'].dirty && dashboardForm.hasError('required', 'zip')">
+                              <label for="inputZip" class="form-label d-flex justify-content-between">Zip <small *ngIf = "dashboardForm.controls['zip'].dirty && dashboardForm.hasError('required', 'zip')" class="text-danger">*Zip is required</small></label>
+                              <input type="number" class="form-control border border-success" formControlName="zip" id="inputZip">
                             </div>
                             
                           </form>
 
-                          <form class="row g-2 p-2" *ngIf= "userRequest">
+                          <form class="row g-2 p-2" [formGroup] = "dashboardForm"  *ngIf= "userRequest">
                             <div class="col-12 d-flex justify-content-between align-items-center">
                                 <h1 class="text-decoration-underline">Quote - Request</h1>
                                 <button type="submit" class="btn btn-success">Submit Request</button>
                               </div>
-                            <div class="col-md-3">
+                              
+                            <div class="col-md-3" [class.error]="dashboardForm.controls['gallons'].dirty && dashboardForm.hasError('required', 'gallons')">
 
-                              <label for="gallonsRequest" class="form-label ">Gallons</label>
-                              <input type="number" class="form-control border border-success" id="gallonsRequest">
+                              <label for="gallonsRequest" class="form-label d-flex justify-content-between ">Gallons <small *ngIf = "dashboardForm.controls['gallons'].dirty && dashboardForm.hasError('required', 'gallons')" class="text-danger">*Gallon Amount required</small></label>
+                              <input type="number" class="form-control border border-success" formControlName = "gallons" id="gallonsRequest">
                             </div>
 
                             <div class="col-md-9">
                               <label for="deliveryAddress" class="form-label">Delivery Address</label>
-                              <input type="password" class="form-control border border-success" id="deliveryAddress">
+                              <input type="password" class="form-control" id="deliveryAddress" readonly>
                             </div>
 
-                            <div class="col-md-4">
-                              <label for="deliveryDate" class="form-label">Delivery Date</label>
-                              <input type="date" class="form-control border border-success" id="deliveryDate">
+                            <div class="col-md-4" [class.error]="dashboardForm.controls['deliveryDate'].dirty && dashboardForm.hasError('required', 'deliveryDate')">
+                              <label for="deliveryDate d-flex justify-content-between" class="form-label">Delivery Date <small *ngIf = "dashboardForm.controls['deliveryDate'].dirty && dashboardForm.hasError('required', 'deliveryDate')" class="text-danger">*Delivery Date required</small></label>
+                              <input type="date" class="form-control border border-success" id="deliveryDate" formControlName="deliveryDate">
                             </div>
 
                             <div class="col-md-4">
                                 <label for="suggestedPrice" class="form-label">Suggested Price</label>
-                                <input type="number" class="form-control border border-success" id="suggestedPrice">
+                                <input type="number" class="form-control" id="suggestedPrice" readonly>
                               </div>
                               <div class="col-md-4">
                                 <label for="totalDue" class="form-label">Total Amount Due</label>
-                                <input type="number" class="form-control border border-success" id="totalDue">
+                                <input type="number" class="form-control" id="totalDue" readonly>
                               </div>
                             
                           </form>
