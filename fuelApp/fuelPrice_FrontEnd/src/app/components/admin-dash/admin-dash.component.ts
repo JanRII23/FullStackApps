@@ -35,6 +35,5 @@ export class AdminDashComponent {
       this.userSearch = !this.userSearch;
     }
    
-
   }
 }

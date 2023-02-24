@@ -17,17 +17,30 @@
 
     <div class="container-fluid">
                
-        <div class="row">          
+        <div class="row">  
+          
+          <!-- <div class="col" style="padding: 0; background-color: white;">
+            <ul class="navul">
+                <li>
+                    <button type="submit" class="navbut">Home</button>
+                </li>
+
+                <li>
+                    <button type="submit" class="navbut">Account</button>
+                </li>
+
+            </ul>
+        </div> -->
 
               <div class="col-2">
                     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white border border-success">
                 <div class="position-sticky">
                   <div class="list-group list-group-flush mx-3 mt-3">
                     <a href="javascript:void(0);" class="list-group-item list-group-item-action h5 border border-success rounded text-bg-success" aria-disabled="true" (click)= "hideTable(0)">
-                      User Accounts
+                      <span class="align-middle"><mat-icon>person_outline</mat-icon> </span>  User Accounts
                     </a>
-                    <a href="javascript:void(0);" class="list-group-item list-group-item-action h5 border border-success rounded text-bg-success mt-1" (click)= "hideTable(1)">Order History</a>
-                    <a href="#" class="list-group-item list-group-item-action h5 border border-success rounded text-bg-success mt-1" aria-disabled="true">Logout</a>
+                    <a href="javascript:void(0);" class="list-group-item list-group-item-action h5 border border-success rounded text-bg-success mt-1" (click)= "hideTable(1)"><span class="align-middle"><mat-icon>timeline</mat-icon> </span>  Order - History</a>
+                    <a href="#" class="list-group-item list-group-item-action h5 border border-success rounded text-bg-success mt-1" aria-disabled="true"><span class="align-middle"><mat-icon>exit_to_app</mat-icon> </span>  Logout</a>
                    
                   </div>
                 </div>
@@ -40,7 +53,10 @@
                 <div>
                     <div class="panelDash bg-white border border-success table-responsive-sm">
 
-                        <input class="form-control" type="text" placeholder="Search User Accounts" [(ngModel)]="searchUser" *ngIf= "userSearch">
+                      <div class="d-flex justify-content-start mt-4 p-2" *ngIf= "userTable">
+                        <h1 class="text-decoration-underline">User - Accounts</h1>
+                      </div>
+                        <input class="form-control border border-success" type="text" placeholder="Search User Accounts" [(ngModel)]="searchUser" *ngIf= "userSearch">
 
                         <table class="table table-striped table-hover table-bordered" *ngIf= "userTable">
                             <thead class="thead">
@@ -65,7 +81,10 @@
                             </tbody>
                           </table>
 
-                          <input class="form-control" type="text" placeholder="Search Order History" [(ngModel)]="searchOrder" *ngIf= "orderSearch">
+                          <div class="d-flex justify-content-start mt-4 p-2" *ngIf= "orderTable">
+                            <h1 class="text-decoration-underline">Order - History</h1>
+                          </div>
+                          <input class="form-control border border-success" type="text" placeholder="Search Order History" [(ngModel)]="searchOrder" *ngIf= "orderSearch">
                           <table class="table table-striped table-hover table-bordered" *ngIf= "orderTable">
                             <thead class="thead">
                               <tr>
