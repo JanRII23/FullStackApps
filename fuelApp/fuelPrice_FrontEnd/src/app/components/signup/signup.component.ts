@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +15,7 @@ export class SignupComponent {
   lockIcon: string = "lock";
   signupForm! : FormGroup;
 
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router){
   
   }
 
@@ -31,6 +33,24 @@ export class SignupComponent {
     this.isText ? this.type = "password" : this.type = "text";
   }
 
+  onSignup(){
+    if (this.signupForm.valid){
+      this.auth.signUp(this.signupForm.value)
+        .subscribe({
+          next:(res)=>{
+            alert(res.message);
+            this.signupForm.reset();
+            this.router.navigate(['login']);
+          },
+          error:(err)=>{
+            alert(err?.error.message);
+          }
 
+        })
+    }
+    else {
+
+    }
+  }
 
 }

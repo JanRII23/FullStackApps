@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdminDashComponent } from './components/admin-dash/admin-dash.component';
 import { SandBoxComponent } from './components/sand-box/sand-box.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchPipe } from './search.pipe';
+import { HttpClientModule } from '@angular/common/http';
  
 @NgModule({
   declarations: [
@@ -21,7 +21,6 @@ import { SearchPipe } from './search.pipe';
     LoginComponent,
     SignupComponent,
     DashboardComponent,
-    NavbarComponent,
     AdminDashComponent,
     SandBoxComponent,
     SearchPipe
@@ -32,7 +31,8 @@ import { SearchPipe } from './search.pipe';
     BrowserAnimationsModule,
     MatIconModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

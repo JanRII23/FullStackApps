@@ -42,13 +42,12 @@ a:hover{
 }
 
 .panelDash{
-    /* min-height: 82vh;
-    border-radius: 12px;
-    margin-top: 50px; */
-    min-height: 380px;
-    border-radius: 12px;
+
+    min-height: 10px;
+    border-radius: 8px;
     margin-top: 10px;
     margin-bottom: 10px;
+
 }
 
 
@@ -68,6 +67,11 @@ a:hover{
 }
 
 .form-floating.error{
+    border: 2px solid red;
+    color: red;
+}
+
+.form.error{
     border: 2px solid red;
     color: red;
 }
@@ -103,3 +107,35 @@ img{
     background-color: #04AA6D;
     color: white;
 }
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    min-width: 250px;
+    max-width: 250px;
+    padding: 80px 0 0;
+
+  }
+  
+  @media (max-width: 1000px) {
+    .sidebar {
+      width: 100%;
+    }
+  }
+  .sidebar .active {
+    border-radius: 5px;
+    
+  }
+  
+  .sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  

@@ -57,7 +57,7 @@
                             </div>
                             <small *ngIf = "signupForm.controls['verifyPassword'].dirty && signupForm.hasError('required', 'verifyPassword')" class="text-danger">*Password does not match</small>
                            
-                            <button type = "submit" class = "btn text-bg-success btn-block mt-4 w-100">Sign Up</button>
+                            <button (click)="onSignup()" type = "submit" class = "btn text-bg-success btn-block mt-4 w-100">Sign Up</button>
                             <div class="text-center pt-4 text-muted">Already have account? <a id="forget" routerLink="/login">Login</a></div>
                         </form>
                     </div>
