@@ -57,6 +57,7 @@
                         <h1 class="text-decoration-underline">User - Accounts</h1>
                       </div>
                         <input class="form-control border border-success" type="text" placeholder="Search User Accounts" [(ngModel)]="searchUser" *ngIf= "userSearch">
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
 
                         <table class="table table-striped table-hover table-bordered" *ngIf= "userTable">
                             <thead class="thead">
@@ -80,11 +81,14 @@
                               </tr>                  
                             </tbody>
                           </table>
+                        </div>
 
                           <div class="d-flex justify-content-start mt-4 p-2" *ngIf= "orderTable">
                             <h1 class="text-decoration-underline">Order - History</h1>
                           </div>
                           <input class="form-control border border-success" type="text" placeholder="Search Order History" [(ngModel)]="searchOrder" *ngIf= "orderSearch">
+
+                          <div class="table-wrapper-scroll-y my-custom-scrollbar">
                           <table class="table table-striped table-hover table-bordered" *ngIf= "orderTable">
                             <thead class="thead">
                               <tr>
@@ -109,7 +113,7 @@
                           </table>
                           
                     
-    
+                        </div>
                     </div>
                 </div>
 

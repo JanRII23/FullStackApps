@@ -10,24 +10,81 @@ export class DashboardComponent {
 
   searchOrder = '';
 
-  userOrderTable:boolean = true;
-  userOrderSearch:boolean = true;
+  userOrderTable: boolean = true;
+  userOrderSearch: boolean = true;
 
-  userAccount:boolean = true;
-  userRequest:boolean = true;
+  userAccount: boolean = true;
+  userRequest: boolean = true;
 
-  dashboardForm! : FormGroup 
+  dashboardForm!: FormGroup
 
+
+  public name: string = "Name";
+  
   orderHistoryData = [
-    {userId: 1, orderNum: 54321, gallonsReq: 6.0, deliAddress: "123 Wallstreet, Houston, Texas (TX)", deliDate: "02/20/2023", priceGal: "$40.00"},
-    {userId: 2, orderNum: 24680, gallonsReq: 4.0, deliAddress: "987 Apple St, Dallas, Texas (TX)", deliDate: "02/21/2023", priceGal: "$40.00"}
+    { userId: 1, orderNum: 54321, gallonsReq: 6.0, deliAddress: "123 Wallstreet, Houston, Texas (TX)", deliDate: "02/20/2023", priceGal: "$40.00" },
+    { userId: 2, orderNum: 24680, gallonsReq: 4.0, deliAddress: "987 Apple St, Dallas, Texas (TX)", deliDate: "02/21/2023", priceGal: "$40.00" }
   ];
 
-  constructor(private fb:FormBuilder){
+  states = [
+    "Alabama",
+    "Alaska",
+    "Arizona",
+    "Arkansas",
+    "California",
+    "Colorado",
+    "Connecticut",
+    "Delaware",
+    "Florida",
+    "Georgia",
+    "Hawaii",
+    "Idaho",
+    "Illinois",
+    "Indiana",
+    "Iowa",
+    "Kansas",
+    "Kentucky",
+    "Louisiana",
+    "Maine",
+    "Maryland",
+    "Massachusetts",
+    "Michigan",
+    "Minnesota",
+    "Mississippi",
+    "Missouri",
+    "Montana",
+    "Nebraska",
+    "Nevada",
+    "New Hampshire",
+    "New Jersey",
+    "New Mexico",
+    "New York",
+    "North Carolina",
+    "North Dakota",
+    "Ohio",
+    "Oklahoma",
+    "Oregon",
+    "Pennsylvania",
+    "Rhode Island",
+    "South Carolina",
+    "South Dakota",
+    "Tennessee",
+    "Texas",
+    "Utah",
+    "Vermont",
+    "Virginia",
+    "Washington",
+    "West Virginia",
+    "Wisconsin",
+    "Wyoming"
+  ];
+
+
+  constructor(private fb: FormBuilder) {
 
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.dashboardForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -38,21 +95,21 @@ export class DashboardComponent {
       gallons: ['', Validators.required],
       deliverDayte: ['', Validators.required]
     })
-  
+
   }
 
-  hideTable(x: number){
-  
-    if (x == 2){
+  hideTable(x: number) {
+
+    if (x == 2) {
       this.userOrderTable = !this.userOrderTable;
       this.userOrderSearch = !this.userOrderSearch;
-    } else if (x == 1){
+    } else if (x == 1) {
       this.userRequest = !this.userRequest;
     }
-    else{
+    else {
       this.userAccount = !this.userAccount;
     }
-   
+
   }
 }
 

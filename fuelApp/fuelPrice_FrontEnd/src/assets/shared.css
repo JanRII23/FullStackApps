@@ -3,6 +3,7 @@
     height: 100vh;
     background: linear-gradient(to right, #F6D285
     , #BBF0F3);
+    overflow: auto;
 }
 
 .panel-heading{
@@ -138,4 +139,12 @@ img{
     overflow-y: auto;
   }
 
-  
+.my-custom-scrollbar {
+    position: relative;
+    height: 300px;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
