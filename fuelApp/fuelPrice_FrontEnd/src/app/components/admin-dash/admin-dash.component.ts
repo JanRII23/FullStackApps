@@ -6,6 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-dash.component.scss']
 })
 export class AdminDashComponent {
+
+  //this just technically needs to retrieve from database
+
   userAccountsData = [
     {userId: 1, name: "John Doe", address: "123 Wallstreet", city: "Houston", state: "Texas (TX)", zipcode: "123456"},
     {userId: 2, name: "Matthew Smith", address: "987 Apple St", city: "Dallas", state: "Texas (TX)", zipcode: "654321"},

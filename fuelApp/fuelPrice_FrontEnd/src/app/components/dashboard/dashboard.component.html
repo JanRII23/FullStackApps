@@ -42,7 +42,7 @@
                         <form class="row g-2 p-2" [formGroup] = "dashboardForm" *ngIf= "userAccount">
                             <div class="col-12 d-flex justify-content-between align-items-center">
                                 <h1 class="text-decoration-underline">My Account</h1>
-                              <button type="submit" class="btn btn-success">Update Profile</button>      
+                              <button (click)="updateProfile()" type="submit" class="btn btn-success">Update Profile</button>      
                             </div>
                             
                             <div class="col-md-6" [class.error]="dashboardForm.controls['firstName'].dirty && dashboardForm.hasError('required', 'firstName')">
@@ -93,7 +93,7 @@
                           <form class="row g-2 p-2" [formGroup] = "dashboardForm"  *ngIf= "userRequest">
                             <div class="col-12 d-flex justify-content-between align-items-center">
                                 <h1 class="text-decoration-underline">Quote - Request</h1>
-                                <button type="submit" class="btn btn-success">Submit Request</button>
+                                <button (click)="submitRequest()" type="submit" class="btn btn-success">Submit Request</button>
                               </div>
                               
                             <div class="col-md-3" [class.error]="dashboardForm.controls['gallons'].dirty && dashboardForm.hasError('required', 'gallons')">
