@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserModel } from './user.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
+
+  userObj : UserModel = new UserModel();
 
   orderHistoryData = [
     { userId: 1, orderNum: 54321, gallonsReq: 6.0, deliAddress: "123 Wallstreet, Houston, Texas (TX)", deliDate: "02/20/2023", priceGal: "$40.00" },
@@ -82,17 +85,24 @@ export class DashboardComponent {
   constructor(private fb: FormBuilder) {
 
   }
+  
+  //What I can do is on initialization check to see if 
+  //the user with specific Id updated account if so
+  //then assign the form values like test string above
+  //otherwise just simply set to empty string
 
   ngOnInit(): void {
     this.dashboardForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      addressOne: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      zip: ['', Validators.required],
+      firstName: [this.userObj.firstName, Validators.required],
+      lastName: [this.userObj.lastName, Validators.required],
+      addressOne: [this.userObj.addressOne, Validators.required],
+      addressTwo:[this.userObj.addressTwo],
+      city: [this.userObj.city, Validators.required],
+      state: [this.userObj.state, Validators.required],
+      zip: [this.userObj.zipcode, Validators.required],
+
       gallons: ['', Validators.required],
-      deliverDayte: ['', Validators.required]
+      deliveryDate: ['', Validators.required]
     })
 
   }

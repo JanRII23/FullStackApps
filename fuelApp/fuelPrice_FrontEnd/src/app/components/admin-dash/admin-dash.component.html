@@ -63,7 +63,8 @@
                             <thead class="thead">
                               <tr>
                                 <th scope="col">User ID</th>
-                                <th scope="col">Name</th>
+                                <th scope="col">Firstname</th>
+                                <th scope="col">Lastname</th>
                                 <th scope="col">Address</th>
                                 <th scope="col">City</th>
                                 <th scope="col">State</th>
@@ -71,10 +72,11 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let user of userAccountsData | search: searchUser">
-                                <th scope="row">{{user.userId}}</th>
-                                <td>{{user.name}}</td>
-                                <td>{{user.address}}</td>
+                              <tr *ngFor="let user of userData | search: searchUser">
+                                <th scope="row">{{user.clientID}}</th>
+                                <td>{{user.firstName}}</td>
+                                <td>{{user.lastName}}</td>
+                                <td>{{user.addressOne}}</td>
                                 <td>{{user.city}}</td>
                                 <td>{{user.state}}</td>
                                 <td>{{user.zipcode}}</td>

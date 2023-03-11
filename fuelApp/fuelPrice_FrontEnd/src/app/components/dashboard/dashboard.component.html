@@ -48,7 +48,7 @@
                             <div class="col-md-6" [class.error]="dashboardForm.controls['firstName'].dirty && dashboardForm.hasError('required', 'firstName')">
 
                               <label for="firstName" class="form-label d-flex justify-content-between">First Name <small *ngIf = "dashboardForm.controls['firstName'].dirty && dashboardForm.hasError('required', 'firstName')" class="text-danger">*First Name is required</small></label>
-                              <input type="text" class="form-control border border-success" id="firstName" formControlName = "firstName" maxlength="25">
+                              <input type="text" value = "test" class="form-control border border-success" id="firstName" formControlName = "firstName" maxlength="25">
                               
                             </div>
                         
@@ -66,7 +66,7 @@
 
                             <div class="col-12">
                               <label for="inputAddress2" class="form-label">Address 2</label>
-                              <input type="text" class="form-control" id="inputAddress2" maxlength="100">
+                              <input type="text" formControlName = "addressTwo" class="form-control" id="inputAddress2" maxlength="100">
                             </div>
 
                             <div class="col-md-6" [class.error]="dashboardForm.controls['city'].dirty && dashboardForm.hasError('required', 'city')">

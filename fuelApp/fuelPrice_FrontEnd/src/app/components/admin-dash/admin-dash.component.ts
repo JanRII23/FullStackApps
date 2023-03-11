@@ -1,18 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ApisService } from 'src/app/services/sharedApi/apis.service';
+import { UserModel } from './admin-dash.model'
 
 @Component({
   selector: 'app-admin-dash',
   templateUrl: './admin-dash.component.html',
   styleUrls: ['./admin-dash.component.scss']
 })
-export class AdminDashComponent {
+export class AdminDashComponent implements OnInit{
 
   //this just technically needs to retrieve from database
 
-  userAccountsData = [
-    {userId: 1, name: "John Doe", address: "123 Wallstreet", city: "Houston", state: "Texas (TX)", zipcode: "123456"},
-    {userId: 2, name: "Matthew Smith", address: "987 Apple St", city: "Dallas", state: "Texas (TX)", zipcode: "654321"},
-  ];
+  userData !: any;
+  userObj : UserModel = new UserModel();
+
+  constructor(private api: ApisService){
+
+  }
+
+  ngOnInit(): void {
+    this.getUserInformation();
+  }
+
+  // userAccountsData = [
+  //   {userId: 1, first: "John", last: "Doe", address: "123 Wallstreet", city: "Houston", state: "Texas (TX)", zipcode: "123456"}
+  // ];
 
   orderHistoryData = [
     {userId: 1, orderNum: 54321, gallonsReq: 6.0, deliAddress: "123 Wallstreet, Houston, Texas (TX)", deliDate: "02/20/2023", priceGal: "$40.00"},
@@ -40,4 +52,14 @@ export class AdminDashComponent {
     }
    
   }
+
+  getUserInformation(){
+    this.api.GetUsers()
+    .subscribe(res=>{
+      this.userData = res.userDetails;
+    })
+  }
+
+
+
 }
