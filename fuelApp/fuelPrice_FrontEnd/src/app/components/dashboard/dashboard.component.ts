@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { LoginComponent } from '../login/login.component';
 import { UserModel } from './user.model';
 
 @Component({
@@ -82,7 +84,7 @@ export class DashboardComponent {
   ];
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private auth:AuthenticationService) {
 
   }
   
@@ -121,12 +123,47 @@ export class DashboardComponent {
 
   }
 
+  setProfile(){
+    if(LoginComponent.userDataLogin.firstName == null){
+      alert("Fill Out Account Information");
+    }else{
+      alert(LoginComponent.userDataLogin.firstName);
+    }
+    
+  }
+
+
   updateProfile(){
+
     //update null values in the database
     //then once updated it should automatically populate on second login
     //can also erase and make changes too
 
-  }
+    //clientId
+    //userName
+    //passwordVerify
+    //passwordVerify
+    //accessLevel all needs to be populated as soon as login
+    
+    // this.userObj.firstName = this.dashboardForm.value.firstName;
+    // this.userObj.lastName = this.dashboardForm.value.lastName;
+    // this.userObj.addressOne = this.dashboardForm.value.addressOne;
+    // this.userObj.addressTwo = this.dashboardForm.value.addressTwo;
+    // this.userObj.city = this.dashboardForm.value.city;
+    // this.userObj.state = this.dashboardForm.value.state;
+    // this.userObj.zipcode = this.dashboardForm.value.zipcode;
+
+
+    // this.auth.updateInformation(this.userObj)
+    // .subscribe(res=>{
+    //   alert("Updated Successfully")
+    //   // let ref = document.getElementById('close');
+    //   // ref?.click();
+    //   // this.getEmployeeDetails();
+
+    // })
+
+ }
 
   submitRequest(){
     //resets the form and then adds to the quote history

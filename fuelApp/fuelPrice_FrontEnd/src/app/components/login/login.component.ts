@@ -16,6 +16,11 @@ export class LoginComponent {
   lockIcon: string = "lock";
   loginForm! : FormGroup;
 
+  static userDataLogin: any;
+
+  test: number = 33;
+
+
   constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router) {
     
   }
@@ -40,6 +45,8 @@ export class LoginComponent {
         .subscribe({
           next:(res)=>{
             alert(res.message);
+            LoginComponent.userDataLogin = res.user; //this receives the json object
+  
             this.loginForm.reset();
             this.router.navigate(['dashboard']);
           },
@@ -55,4 +62,7 @@ export class LoginComponent {
     }
   }
 
+
 }
+
+// export const test: number = 42;

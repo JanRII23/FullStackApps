@@ -1,8 +1,10 @@
 ﻿using fuelPrice_BackEnd.Context;
 using fuelPrice_BackEnd.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace fuelPrice_BackEnd.Controllers
 {
@@ -17,6 +19,8 @@ namespace fuelPrice_BackEnd.Controllers
         {
             _authContext = fuelDbContext;
         }
+
+  
 
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] User userObj)
@@ -35,7 +39,8 @@ namespace fuelPrice_BackEnd.Controllers
 
             return Ok(new
             {
-                Message = "Login Success!"
+                Message = "Login Success!",
+                user
             });
         }
 
@@ -88,17 +93,35 @@ namespace fuelPrice_BackEnd.Controllers
             }
         }
 
-      /*  [HttpGet("getCurrentUser")]
 
-        public IActionResult GetCurrentUsers([FromBody] User userObj)
+        [HttpGet("currentUser")] //Leave this here for future reference
+        
+        public async Task<IActionResult> getCurrentUser([FromQuery] User userObj)
         {
-            var user = _authContext.Users.AsNoTracking().FirstOrDefault(x => x.clientID == userObj.clientID);
+
+            var user = await _authContext.Users.FirstOrDefaultAsync(x => x.userName == userObj.userName && x.password == userObj.password);
+
+            if (user == null)
+            {
+                return NotFound(new
+                {
+                    StatusCode = 404,
+                    Message = "User Doest not Exists"
+                });
+            }
+
             return Ok(new
             {
-                StatusCode = 200,
-                userDetails = user
+                user, 
+                Message = "Found User"
             });
-        }*/
+        }
+
+
+
+
+
+
         //deleteOrders, getOrders, get_id from admin side
 
     }
