@@ -133,22 +133,22 @@
                           <table class="table table-striped table-hover table-bordered" *ngIf= "userOrderTable">
                             <thead class="thead">
                               <tr>
-                                <th scope="col">User ID</th>
                                 <th scope="col">Order Number</th>
                                 <th scope="col">Gallons Requested</th>
                                 <th scope="col">Delivery Address</th>
                                 <th scope="col">Delivery Date</th>
                                 <th scope="col">Price/Gallon</th>
+                                <th scope="col">Total Amount</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr *ngFor="let user of orderHistoryData | search: searchOrder">
-                                <th scope="row">{{user.userId}}</th>
-                                <td>{{user.orderNum}}</td>
+                                <th scope="row">{{user.orderNum}}</th>
                                 <td>{{user.gallonsReq}}</td>
                                 <td>{{user.deliAddress}}</td>
                                 <td>{{user.deliDate}}</td>
                                 <td>{{user.priceGal}}</td>
+                                <td>{{user.totalPrice}}</td>
                               </tr>                             
                             </tbody>
                           </table>

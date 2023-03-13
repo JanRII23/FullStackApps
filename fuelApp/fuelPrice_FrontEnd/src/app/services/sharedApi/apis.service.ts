@@ -13,4 +13,8 @@ export class ApisService {
   GetUsers(){
     return this.http.get<any>(`${this.baseUrl}getAllUsers`)
   }
+
+  GetOrders(){
+    return this.http.get<any>(`${this.baseUrl}getAllOrders`)
+  }
 }

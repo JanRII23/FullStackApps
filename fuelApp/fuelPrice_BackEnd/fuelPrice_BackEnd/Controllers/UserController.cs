@@ -117,6 +117,27 @@ namespace fuelPrice_BackEnd.Controllers
             });
         }
 
+        [HttpPost("addOrder")]
+        public IActionResult AddOrder([FromBody] Pricing userObj)
+        {
+
+            if (userObj == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                _authContext.Orders.Add(userObj);
+                _authContext.SaveChanges();
+   
+                return Ok(new
+                {
+                    StatusCode = 200,
+                    Message = "Order Added"
+                });
+            }
+        }
+
 
 
 

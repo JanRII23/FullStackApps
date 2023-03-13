@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using fuelPrice_BackEnd.Context;
 
@@ -11,9 +12,11 @@ using fuelPrice_BackEnd.Context;
 namespace fuelPriceBackEnd.Migrations
 {
     [DbContext(typeof(fuelDatabaseContext))]
-    partial class fuelDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230313160700_v2")]
+    partial class v2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

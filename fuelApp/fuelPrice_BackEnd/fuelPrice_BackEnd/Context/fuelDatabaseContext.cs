@@ -12,10 +12,12 @@ namespace fuelPrice_BackEnd.Context
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Pricing> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("users");
+            modelBuilder.Entity<Pricing>().ToTable("orders");
         }
     }
 }

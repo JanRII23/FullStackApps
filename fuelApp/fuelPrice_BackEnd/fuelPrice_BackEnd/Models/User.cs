@@ -23,15 +23,5 @@ namespace fuelPrice_BackEnd.Models
         public int zipcode { get; set; }
 
 
-        //Quote - Request --> This might actually get moved somewhere else
-        /*    public float gallons { get; set; }
-        public string deliveryAddress { get; set; }
-        public DateOnly MyProperty { get; set; }
-        public float suggestedPrice { get; set; }
-        public int totalAmountDue { get; set; }*/
-
-
-
-
     }
 }

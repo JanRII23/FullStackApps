@@ -22,6 +22,7 @@ namespace fuelPrice_BackEnd.Controllers
         {
             var userdetails = _context.Users.AsQueryable();
             return Ok(userdetails);
+
         }
 
         [HttpPost("add_user")]
@@ -54,6 +55,18 @@ namespace fuelPrice_BackEnd.Controllers
             {
                 StatusCode = 200,
                 userDetails = allUsers
+            });
+        }
+
+        [HttpGet("getAllOrders")]
+
+        public IActionResult GetAllOrders()
+        {
+            var allOrders = _context.Orders.AsQueryable();
+            return Ok(new
+            {
+                StatusCode = 200,
+                orderDetails = allOrders
             });
         }
 

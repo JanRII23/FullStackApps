@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ApisService } from 'src/app/services/sharedApi/apis.service';
 import { UserModel } from './admin-dash.model'
+import { OrderModel } from './admin-dash.model';
 
 @Component({
   selector: 'app-admin-dash',
@@ -12,7 +13,9 @@ export class AdminDashComponent implements OnInit{
   //this just technically needs to retrieve from database
 
   userData !: any;
+  orderData !: any;
   userObj : UserModel = new UserModel();
+  orderObj: OrderModel = new OrderModel();
 
   constructor(private api: ApisService){
 
@@ -20,17 +23,17 @@ export class AdminDashComponent implements OnInit{
 
   ngOnInit(): void {
     this.getUserInformation();
+    this.getOrderInformation();
   }
 
   // userAccountsData = [
   //   {userId: 1, first: "John", last: "Doe", address: "123 Wallstreet", city: "Houston", state: "Texas (TX)", zipcode: "123456"}
   // ];
 
-  orderHistoryData = [
-    {userId: 1, orderNum: 54321, gallonsReq: 6.0, deliAddress: "123 Wallstreet, Houston, Texas (TX)", deliDate: "02/20/2023", priceGal: "$40.00"},
-    {userId: 2, orderNum: 24680, gallonsReq: 4.0, deliAddress: "987 Apple St, Dallas, Texas (TX)", deliDate: "02/21/2023", priceGal: "$40.00"},
-   
-  ];
+  // orderHistoryData = [
+  //   { userId: 1, orderNum: 54321, gallonsReq: 6.0, deliAddress: "123 Wallstreet, Houston, Texas (TX)", deliDate: "02/20/2023", priceGal: "$40.00", totalPrice: "$120" },
+  //   { userId: 2, orderNum: 24680, gallonsReq: 4.0, deliAddress: "987 Apple St, Dallas, Texas (TX)", deliDate: "02/21/2023", priceGal: "$40.00", totalPrice: "$80.00" }
+  // ];
 
   searchUser ='';
   searchOrder = '';
@@ -57,6 +60,13 @@ export class AdminDashComponent implements OnInit{
     this.api.GetUsers()
     .subscribe(res=>{
       this.userData = res.userDetails;
+    })
+  }
+
+  getOrderInformation(){
+    this.api.GetOrders()
+    .subscribe(res=>{
+      this.orderData = res.orderDetails;
     })
   }
 

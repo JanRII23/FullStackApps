@@ -62,7 +62,7 @@
                         <table class="table table-striped table-hover table-bordered" *ngIf= "userTable">
                             <thead class="thead">
                               <tr>
-                                <th scope="col">User ID</th>
+                                <th scope="col">Client ID</th>
                                 <th scope="col">Firstname</th>
                                 <th scope="col">Lastname</th>
                                 <th scope="col">Address</th>
@@ -94,22 +94,24 @@
                           <table class="table table-striped table-hover table-bordered" *ngIf= "orderTable">
                             <thead class="thead">
                               <tr>
-                                <th scope="col">User ID</th>
+                                <th scope="col">Client ID</th>
                                 <th scope="col">Order Number</th>
                                 <th scope="col">Gallons Requested</th>
                                 <th scope="col">Delivery Address</th>
                                 <th scope="col">Delivery Date</th>
                                 <th scope="col">Price/Gallon</th>
+                                <th scope="col">Total Price</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let user of orderHistoryData | search: searchOrder">
-                                <th scope="row">{{user.userId}}</th>
-                                <td>{{user.orderNum}}</td>
-                                <td>{{user.gallonsReq}}</td>
-                                <td>{{user.deliAddress}}</td>
-                                <td>{{user.deliDate}}</td>
-                                <td>{{user.priceGal}}</td>
+                              <tr *ngFor="let order of orderData | search: searchOrder">
+                                <th scope="row">{{order.orderID}}</th>
+                                <td>{{order.orderNumber}}</td>
+                                <td>{{order.gallonsOrdered}}</td>
+                                <td>{{order.deliveryAddress}}</td>
+                                <td>{{order.deliveryDate}}</td>
+                                <td>${{order.pricePerGallon}}.00</td>
+                                <td>${{order.totalAmountDue}}.00</td>
                               </tr>                             
                             </tbody>
                           </table>
