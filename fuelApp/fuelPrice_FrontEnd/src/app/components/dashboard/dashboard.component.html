@@ -42,13 +42,13 @@
                         <form class="row g-2 p-2" [formGroup] = "dashboardForm" *ngIf= "userAccount">
                             <div class="col-12 d-flex justify-content-between align-items-center">
                                 <h1 class="text-decoration-underline">My Account</h1>
-                              <button (click)="setProfile()" type="submit" class="btn btn-success">Update Profile</button>      
+                              <button (click)="refreshProfileUpdate()" type="submit" class="btn btn-success">{{profileCheck}} Profile</button>      
                             </div>
                             
                             <div class="col-md-6" [class.error]="dashboardForm.controls['firstName'].dirty && dashboardForm.hasError('required', 'firstName')">
 
                               <label for="firstName" class="form-label d-flex justify-content-between">First Name <small *ngIf = "dashboardForm.controls['firstName'].dirty && dashboardForm.hasError('required', 'firstName')" class="text-danger">*First Name is required</small></label>
-                              <input type="text" value = "test" class="form-control border border-success" id="firstName" formControlName = "firstName" maxlength="25">
+                              <input type="text" class="form-control border border-success" id="firstName" formControlName = "firstName" maxlength="25">
                               
                             </div>
                         
@@ -78,7 +78,7 @@
                               <label for="inputState" class="form-label">State <small *ngIf = "dashboardForm.controls['state'].dirty && dashboardForm.hasError('required', 'state')" class="text-danger">*State is required</small></label>
                               <select id="inputState" class="form-select border border-success" formControlName = "state">
                                 <option value="default">----</option>
-                                <option *ngFor="let state of states" [value] = "state">{{state}}</option>
+                                <option *ngFor="let item of states | keyvalue" [value] = "item.value">{{item.key}}</option>
                                 
                               </select>
                             </div>

@@ -20,7 +20,7 @@ export class AuthenticationService {
   }
 
   updateInformation(userObj:any){
-    return this.http.post<any>(`${this.baseUrl}updateAccount`, userObj);
+    return this.http.put<any>(`${this.baseUrl}updateAccount`, userObj);
   }
 
   currentUser(userObj:any){
