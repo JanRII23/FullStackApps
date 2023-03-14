@@ -48,7 +48,14 @@ export class LoginComponent {
             LoginComponent.userDataLogin = res.user; //this receives the json object
   
             this.loginForm.reset();
-            this.router.navigate(['dashboard']);
+
+            if (LoginComponent.userDataLogin.accessLevel == 10){
+              this.router.navigate(['adminDash']);
+
+            }else{
+              this.router.navigate(['dashboard']);
+            }
+            
           },
           error:(err)=>{
             alert(err?.error.message);

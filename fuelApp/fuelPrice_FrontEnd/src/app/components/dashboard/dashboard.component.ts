@@ -115,7 +115,7 @@ export class DashboardComponent {
   }
 
   populateProfile(){
-    if(LoginComponent.userDataLogin.firstName == null){
+    if(LoginComponent.userDataLogin.firstName == null || LoginComponent.userDataLogin.lastName || LoginComponent.userDataLogin.addressOne || LoginComponent.userDataLogin.city || LoginComponent.userDataLogin.state || LoginComponent.userDataLogin.zipcode){
       alert("Fill Out Account Information");
       this.dashboardForm = this.fb.group({
         firstName: [this.userObj.firstName, Validators.required],

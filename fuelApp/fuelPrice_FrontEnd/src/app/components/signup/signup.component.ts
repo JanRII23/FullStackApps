@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { verifyPassword } from 'src/app/helpers/passwordMatch';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -22,10 +23,11 @@ export class SignupComponent {
   ngOnInit(): void{
     this.signupForm = this.fb.group({
       username: ['', Validators.required],
-      password:['', Validators.required],
-      verifyPassword: ['', Validators.required]
+      password:['', [Validators.required]],
+      passwordVerification: ['', [Validators.required, verifyPassword('password')]]
     })
   }
+
 
   hideShowPass(){
     this.isText = !this.isText;

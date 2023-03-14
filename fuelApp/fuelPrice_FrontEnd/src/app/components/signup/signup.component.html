@@ -49,13 +49,15 @@
 
                             <div class="form-group pt-3">
                                 
-                                <div class="form-floating" (click) = "hideShowPass()" [class.error]="signupForm.controls['verifyPassword'].dirty && signupForm.hasError('required', 'verifyPassword')">
-                                    <input [type]="type" id="password" class="form-control" formControlName = "verifyPassword" placeholder="password">
+                                <div class="form-floating" (click) = "hideShowPass()" [class.error]="signupForm.controls['passwordVerification'].dirty && signupForm.hasError('required', 'passwordVerification')">
+                                    <input [type]="type" id="password" class="form-control" formControlName = "passwordVerification" placeholder="password">
                                     <label for="password" class = "form-label text-muted"> <span class="align-middle"><mat-icon>{{lockIcon}}</mat-icon></span> Verify Password</label>
                                 
                                 </div>
                             </div>
-                            <small *ngIf = "signupForm.controls['verifyPassword'].dirty && signupForm.hasError('required', 'verifyPassword')" class="text-danger">*Password does not match</small>
+                            <small *ngIf = "signupForm.controls['passwordVerification'].dirty && signupForm.hasError('required', 'passwordVerification')" class="text-danger">*Verify Password is required <br></small>
+                            <small *ngIf = "signupForm.controls['passwordVerification'].hasError('passwordMismatchError')" class="text-danger">*Password does not match</small>
+                            
                            
                             <button (click)="onSignup()" type = "submit" class = "btn text-bg-success btn-block mt-4 w-100">Sign Up</button>
                             <div class="text-center pt-4 text-muted">Already have account? <a id="forget" routerLink="/login">Login</a></div>
