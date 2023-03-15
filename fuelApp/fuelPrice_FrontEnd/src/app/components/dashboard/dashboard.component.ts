@@ -172,7 +172,6 @@ export class DashboardComponent {
     this.userObj.state = this.dashboardForm.controls['state'].value
     this.userObj.zipcode = this.dashboardForm.controls['zip'].value
 
-
     this.auth.updateInformation(this.userObj)
     .subscribe(res=>{
       alert("Updated Successfully");
@@ -181,6 +180,9 @@ export class DashboardComponent {
  }
 
   submitRequest(){
+
+    //once user inputs gallons and delivery date then submit request then it would automatically populate it with delivery address, suggested price, and total amount due --> then there would be a popup that comes up that says confirm or cancel to be added to order history
+
     //resets the form and then adds to the quote history
     
   }
