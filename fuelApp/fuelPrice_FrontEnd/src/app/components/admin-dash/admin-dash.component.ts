@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ApisService } from 'src/app/services/sharedApi/apis.service';
 import { UserModel } from './admin-dash.model'
 import { OrderModel } from './admin-dash.model';
@@ -17,7 +19,7 @@ export class AdminDashComponent implements OnInit{
   userObj : UserModel = new UserModel();
   orderObj: OrderModel = new OrderModel();
 
-  constructor(private api: ApisService){
+  constructor(private api: ApisService, private auth:AuthenticationService, private router: Router){
 
   }
 
@@ -54,6 +56,11 @@ export class AdminDashComponent implements OnInit{
       this.userSearch = !this.userSearch;
     }
    
+  }
+
+  logout(){
+    this.auth.logoutUser();
+    this.router.navigate(['login']);
   }
 
   getUserInformation(){

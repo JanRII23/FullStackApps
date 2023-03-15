@@ -9,13 +9,18 @@ import { DashboardComponent } from '../components/dashboard/dashboard.component'
 export class AuthenticationService {
 
   private baseUrl:string = "https://localhost:7158/api/User/";
-  constructor(private http : HttpClient) { }
+  private loggedIn:boolean;
+
+  constructor(private http : HttpClient) {
+    this.loggedIn = false;
+   }
 
   signUp(userObj:any){
     return this.http.post<any>(`${this.baseUrl}register`, userObj);
   }
 
   login(loginObj:any){
+    this.loggedIn = true;
     return this.http.post<any>(`${this.baseUrl}authenticate`, loginObj);
   }
 
@@ -25,5 +30,13 @@ export class AuthenticationService {
 
   currentUser(userObj:any){
     return this.http.post<any>(`${this.baseUrl}currentUser`, userObj);
+  }
+
+  isLoggedIn(): boolean{
+    return this.loggedIn; //return true
+  }
+
+  logoutUser(): void{
+    this.loggedIn = false;
   }
 }

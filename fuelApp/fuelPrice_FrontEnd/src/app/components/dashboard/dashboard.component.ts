@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { LoginComponent } from '../login/login.component';
 import { UserModel } from './user.model';
@@ -86,7 +87,7 @@ export class DashboardComponent {
 
 
 
-  constructor(private fb: FormBuilder, private auth:AuthenticationService) {
+  constructor(private fb: FormBuilder, private auth:AuthenticationService, private router: Router) {
 
   }
   
@@ -114,8 +115,13 @@ export class DashboardComponent {
 
   }
 
+  logout(){
+    this.auth.logoutUser();
+    this.router.navigate(['login']);
+  }
+
   populateProfile(){
-    if(LoginComponent.userDataLogin.firstName == null || LoginComponent.userDataLogin.lastName || LoginComponent.userDataLogin.addressOne || LoginComponent.userDataLogin.city || LoginComponent.userDataLogin.state || LoginComponent.userDataLogin.zipcode){
+    if(LoginComponent.userDataLogin.firstName == null || LoginComponent.userDataLogin.lastName == null || LoginComponent.userDataLogin.addressOne == null || LoginComponent.userDataLogin.city == null || LoginComponent.userDataLogin.state == null || LoginComponent.userDataLogin.zipcode == null){
       alert("Fill Out Account Information");
       this.dashboardForm = this.fb.group({
         firstName: [this.userObj.firstName, Validators.required],

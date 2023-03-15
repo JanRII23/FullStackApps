@@ -9,7 +9,7 @@
                     <a class="nav-link mt-0 w-100"><h1 style="margin: 0; color: white; font-weight: normal;">Admin | </h1></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="btn btn-light mt-0 w-100"><h3 style="margin: 0;">Logout</h3></a>
+                    <a href="javascript:void(0);" (click)="logout()" class="btn btn-light mt-0 w-100"><h3 style="margin: 0;">Logout</h3></a>
                 </li>
             </ul>
         </div>
@@ -40,7 +40,7 @@
                       <span class="align-middle"><mat-icon>person_outline</mat-icon> </span>  User Accounts
                     </a>
                     <a href="javascript:void(0);" class="list-group-item list-group-item-action h5 border border-success rounded text-bg-success mt-1" (click)= "hideTable(1)"><span class="align-middle"><mat-icon>timeline</mat-icon> </span>  Order - History</a>
-                    <a href="#" class="list-group-item list-group-item-action h5 border border-success rounded text-bg-success mt-1" aria-disabled="true"><span class="align-middle"><mat-icon>exit_to_app</mat-icon> </span>  Logout</a>
+                    <a href="javascript:void(0);" (click)="logout()" class="list-group-item list-group-item-action h5 border border-success rounded text-bg-success mt-1" aria-disabled="true"><span class="align-middle"><mat-icon>exit_to_app</mat-icon> </span>  Logout</a>
                    
                   </div>
                 </div>

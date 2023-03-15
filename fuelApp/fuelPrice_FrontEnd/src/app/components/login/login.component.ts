@@ -49,7 +49,7 @@ export class LoginComponent {
   
             this.loginForm.reset();
 
-            if (LoginComponent.userDataLogin.accessLevel == 10){
+            if (LoginComponent.userDataLogin.accessLevel === 10){
               this.router.navigate(['adminDash']);
 
             }else{
