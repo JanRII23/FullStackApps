@@ -23,8 +23,6 @@ namespace fuelPrice_BackEnd.Controllers
             _authContext = fuelDbContext;
         }
 
-  
-
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] User userObj)
         {

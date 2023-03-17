@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fuelPrice_BackEnd", "fuelPrice_BackEnd\fuelPrice_BackEnd.csproj", "{3812BD2D-B653-4465-8E40-A9528D8F2063}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fuelPrice_UnitTests", "fuelPrice_UnitTests\fuelPrice_UnitTests.csproj", "{CF280C2C-E9F0-4F98-9E56-E21EC5C30BD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3812BD2D-B653-4465-8E40-A9528D8F2063}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3812BD2D-B653-4465-8E40-A9528D8F2063}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3812BD2D-B653-4465-8E40-A9528D8F2063}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF280C2C-E9F0-4F98-9E56-E21EC5C30BD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF280C2C-E9F0-4F98-9E56-E21EC5C30BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF280C2C-E9F0-4F98-9E56-E21EC5C30BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF280C2C-E9F0-4F98-9E56-E21EC5C30BD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
