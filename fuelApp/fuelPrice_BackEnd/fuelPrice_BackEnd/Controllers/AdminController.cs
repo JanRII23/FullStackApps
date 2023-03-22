@@ -2,6 +2,7 @@
 using fuelPrice_BackEnd.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace fuelPrice_BackEnd.Controllers
 {
@@ -51,6 +52,7 @@ namespace fuelPrice_BackEnd.Controllers
         public IActionResult GetAllUsers()
         {
             var allUsers = _context.Users.AsQueryable();
+
             return Ok(new
             {
                 StatusCode = 200,

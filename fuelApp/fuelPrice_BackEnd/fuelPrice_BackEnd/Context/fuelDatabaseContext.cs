@@ -5,7 +5,7 @@ namespace fuelPrice_BackEnd.Context
 {
     public class fuelDatabaseContext : DbContext
     {
-
+     
         public fuelDatabaseContext(DbContextOptions<fuelDatabaseContext> options):base(options) 
         {
         
