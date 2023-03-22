@@ -143,7 +143,7 @@ namespace fuelPrice_BackEnd.Controllers
         }
 
 
-        [HttpGet("currentUser")] //Leave this here for future reference
+        /*[HttpGet("currentUser")] //Leave this here for future reference
         
         public async Task<IActionResult> getCurrentUser([FromQuery] User userObj)
         {
@@ -164,7 +164,7 @@ namespace fuelPrice_BackEnd.Controllers
                 user, 
                 Message = "Found User"
             });
-        }
+        }*/
 
         [HttpPost("addOrder")]
         public IActionResult AddOrder([FromBody] Pricing userObj)

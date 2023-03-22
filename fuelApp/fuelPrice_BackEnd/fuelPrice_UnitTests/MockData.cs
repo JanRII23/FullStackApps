@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace fuelPrice_UnitTests
 {
+    //primarily for reference
     public class MockData
     {
         public static List<User> GetFakeUserList()

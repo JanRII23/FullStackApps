@@ -28,9 +28,9 @@ export class AuthenticationService {
     return this.http.put<any>(`${this.baseUrl}updateAccount`, userObj);
   }
 
-  currentUser(userObj:any){
-    return this.http.post<any>(`${this.baseUrl}currentUser`, userObj);
-  }
+  // currentUser(userObj:any){
+  //   return this.http.post<any>(`${this.baseUrl}currentUser`, userObj);
+  // }
 
   isLoggedIn(): boolean{
     return this.loggedIn; //return true

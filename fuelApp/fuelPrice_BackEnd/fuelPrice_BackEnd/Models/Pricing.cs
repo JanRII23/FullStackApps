@@ -9,8 +9,10 @@ namespace fuelPrice_BackEnd.Models
         [Key]
         public int orderID { get; set; }
         public int orderNumber { get; set; } //randomly generated once request submitted
+
         public int gallonsOrdered { get; set; }
         public string deliveryAddress { get; set; }
+
         public string deliveryDate { get; set; }
         public float pricePerGallon { get; set; }   
         public float totalAmountDue { get; set; }

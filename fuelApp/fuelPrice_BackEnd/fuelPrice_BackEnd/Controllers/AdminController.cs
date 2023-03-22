@@ -25,7 +25,7 @@ namespace fuelPrice_BackEnd.Controllers
             return Ok(userdetails);
 
         }
-
+/*
         [HttpPost("add_user")]
 
         public IActionResult AddUser([FromBody] User userObj) { 
@@ -46,7 +46,7 @@ namespace fuelPrice_BackEnd.Controllers
                 });
             }
         }
-
+*/
         [HttpGet("getAllUsers")]
 
         public IActionResult GetAllUsers()

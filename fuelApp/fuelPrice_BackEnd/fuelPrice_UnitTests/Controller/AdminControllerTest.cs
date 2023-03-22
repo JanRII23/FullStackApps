@@ -19,28 +19,35 @@ namespace fuelPrice_UnitTests.Controller
     public class AdminControllerTest
     {
        
-        /*private readonly fuelDatabaseContext _mockData;
-        private readonly AdminController _controller;
+        private readonly AdminController controller;
+        private readonly fuelDatabaseContext context;
+
         public AdminControllerTest()
         {
-            _mockData.Users(null);
-
-            _controller = new AdminController(_mockData);
-        }*/
-
-        [Fact]
-        public void GetAllUsers_Execute_ReturnsOkResult()
-        {
-            // Arrange
             var options = new DbContextOptionsBuilder<fuelDatabaseContext>()
                 .UseInMemoryDatabase(databaseName: "fuelAPIDatabase")
                 .Options;
 
-            /*options = null;*/
+            context = new fuelDatabaseContext(options);
+            controller = new AdminController(context);
+        }
 
-            var context = new fuelDatabaseContext(options);
-            var controller = new AdminController(context);
-/*
+        [Fact]
+        public void GetUsers_ActionExecutes_ReturnsOkResult()
+        {
+            //Act
+            var result = controller.GetUsers();
+
+            //Assert
+            Assert.IsType<OkObjectResult>(result as OkObjectResult);
+        }
+
+
+        [Fact]
+        public void GetAllUsers_ActionExecutes_ReturnsOkResult()
+        {
+           
+            /*
             var testModel = new User {
                 clientID = 1,
                 userName = "John",
@@ -66,23 +73,15 @@ namespace fuelPrice_UnitTests.Controller
         }
 
         [Fact]
-        public void GetAllOrders_Execute_ReturnsOkResult()
+        public void GetAllOrders_ActionExecutes_ReturnsOkResult()
         {
-            // Arrange
-            var options = new DbContextOptionsBuilder<fuelDatabaseContext>()
-                .UseInMemoryDatabase(databaseName: "fuelAPIDatabase")
-                .Options;
-
-            var context = new fuelDatabaseContext(options);
-            var controller = new AdminController(context);    
-
+              
             // Act
             var result = controller.GetAllUsers();
 
             // Assert
             Assert.IsType<OkObjectResult>(result as OkObjectResult);
 
-          
         }
 
 
