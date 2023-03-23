@@ -12,7 +12,7 @@ import { UserModel } from './user.model';
 })
 export class DashboardComponent {
 
-  userObj : UserModel = new UserModel();
+  userObj: UserModel = new UserModel();
 
   orderHistoryData = [
     { userId: 1, orderNum: 54321, gallonsReq: 6.0, deliAddress: "123 Wallstreet, Houston, Texas (TX)", deliDate: "02/20/2023", priceGal: "$40.00", totalPrice: "$120" },
@@ -87,10 +87,10 @@ export class DashboardComponent {
 
 
 
-  constructor(private fb: FormBuilder, private auth:AuthenticationService, private router: Router) {
+  constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router) {
 
   }
-  
+
   //What I can do is on initialization check to see if 
   //the user with specific Id updated account if so
   //then assign the form values like test string above
@@ -115,34 +115,34 @@ export class DashboardComponent {
 
   }
 
-  logout(){
+  logout() {
     this.auth.logoutUser();
     this.router.navigate(['login']);
   }
 
-  populateProfile(){
-    if(LoginComponent.userDataLogin.firstName == null || LoginComponent.userDataLogin.lastName == null || LoginComponent.userDataLogin.addressOne == null || LoginComponent.userDataLogin.city == null || LoginComponent.userDataLogin.state == null || LoginComponent.userDataLogin.zipcode == null){
+  populateProfile() {
+    if (LoginComponent.userDataLogin.firstName == "" || LoginComponent.userDataLogin.lastName == "" || LoginComponent.userDataLogin.addressOne == "" || LoginComponent.userDataLogin.city == "" || LoginComponent.userDataLogin.state == "" || LoginComponent.userDataLogin.zipcode == 0) {
       alert("Fill Out Account Information");
       this.dashboardForm = this.fb.group({
-        firstName: [this.userObj.firstName, Validators.required],
-        lastName: [this.userObj.lastName, Validators.required],
-        addressOne: [this.userObj.addressOne, Validators.required],
-        addressTwo:[this.userObj.addressTwo],
-        city: [this.userObj.city, Validators.required],
-        state: [this.userObj.state, Validators.required],
-        zip: [this.userObj.zipcode, Validators.required],
-        
+        firstName: [LoginComponent.userDataLogin.firstName ? LoginComponent.userDataLogin.firstName : '', Validators.required],
+        lastName: [LoginComponent.userDataLogin.lastName ? LoginComponent.userDataLogin.lastName : '', Validators.required],
+        addressOne: [LoginComponent.userDataLogin.addressOne ? LoginComponent.userDataLogin.addressOne : '', Validators.required],
+        addressTwo: [LoginComponent.userDataLogin.addressTwo ? LoginComponent.userDataLogin.addressTwo : ''],
+        city: [LoginComponent.userDataLogin.city ? LoginComponent.userDataLogin.city : '', Validators.required],
+        state: [LoginComponent.userDataLogin.state ? LoginComponent.userDataLogin.state : '', Validators.required],
+        zip: [LoginComponent.userDataLogin.zipcode ? LoginComponent.userDataLogin.zipcode : '', Validators.required],
+
         gallons: ['', Validators.required],
         deliveryDate: ['', Validators.required]
       })
     }
-    else{
-      alert("works");      
+    else {
+      alert("works");
       this.dashboardForm = this.fb.group({
         firstName: [LoginComponent.userDataLogin.firstName, Validators.required],
         lastName: [LoginComponent.userDataLogin.lastName, Validators.required],
         addressOne: [LoginComponent.userDataLogin.addressOne, Validators.required],
-        addressTwo:[LoginComponent.userDataLogin.addressTwo],
+        addressTwo: [LoginComponent.userDataLogin.addressTwo],
         city: [LoginComponent.userDataLogin.city, Validators.required],
         state: [LoginComponent.userDataLogin.state, Validators.required],
         zip: [LoginComponent.userDataLogin.zipcode, Validators.required],
@@ -152,13 +152,13 @@ export class DashboardComponent {
       })
       this.name = LoginComponent.userDataLogin.firstName;
     }
-    
+
   }
 
-  
 
 
-  refreshProfileUpdate(){
+
+  refreshProfileUpdate() {
 
     this.userObj.clientID = LoginComponent.userDataLogin.clientID;
     this.userObj.userName = LoginComponent.userDataLogin.userName;
@@ -172,19 +172,23 @@ export class DashboardComponent {
     this.userObj.state = this.dashboardForm.controls['state'].value
     this.userObj.zipcode = this.dashboardForm.controls['zip'].value
 
+
+    //unlike the form this is passing in the model
     this.auth.updateInformation(this.userObj)
-    .subscribe(res=>{
-      alert("Updated Successfully");
-    })
+      .subscribe(res => {
+        alert("Updated Successfully");
+      })
 
- }
 
-  submitRequest(){
+
+  }
+
+  submitRequest() {
 
     //once user inputs gallons and delivery date then submit request then it would automatically populate it with delivery address, suggested price, and total amount due --> then there would be a popup that comes up that says confirm or cancel to be added to order history
 
     //resets the form and then adds to the quote history
-    
+
   }
 }
 
