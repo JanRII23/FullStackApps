@@ -188,7 +188,29 @@ namespace fuelPrice_BackEnd.Controllers
         }
 
 
+        [HttpGet("GetCurUserOrders")]
 
+        public IActionResult GetCurUserOrders()
+        {
+            //referring to the foreign key from the table
+
+            var allOrders = _authContext.Orders.AsQueryable();
+
+            if (allOrders == null)
+            {
+                return NotFound(new
+                {
+                    StatusCode = 404,
+                    Message = "User/Account does not exists"
+                });
+            }
+
+            return Ok(new
+            {
+                StatusCode = 200,
+                orderDetails = allOrders
+            });
+        }
 
 
 
