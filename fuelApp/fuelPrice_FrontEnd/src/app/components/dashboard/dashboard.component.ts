@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { LoginComponent } from '../login/login.component';
 import { OrderModel } from './order.model';
 import { UserModel } from './user.model';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-dashboard',
@@ -91,19 +92,22 @@ export class DashboardComponent {
 
 
 
-  constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router) {
+  constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router, private localSt: LocalStorageService) {
+
+    var data = this.localSt.retrieve('userInfo');
+    if (data) {
+      LoginComponent.userDataLogin = data;
+      this.populateProfile();
+      this.getCurUserOrders();
+    }
 
   }
-
-  //What I can do is on initialization check to see if 
-  //the user with specific Id updated account if so
-  //then assign the form values like test string above
-  //otherwise just simply set to empty string
 
   ngOnInit(): void {
     this.populateProfile();
     this.getCurUserOrders();
 
+   
   }
 
   hideTable(x: number) {
@@ -123,11 +127,11 @@ export class DashboardComponent {
   logout() {
     this.auth.logoutUser();
     this.router.navigate(['login']);
+    this.localSt.clear('userInfo');
   }
 
   populateProfile() {
     if (LoginComponent.userDataLogin.firstName == "" || LoginComponent.userDataLogin.lastName == "" || LoginComponent.userDataLogin.addressOne == "" || LoginComponent.userDataLogin.city == "" || LoginComponent.userDataLogin.state == "" || LoginComponent.userDataLogin.zipcode == 0) {
-      alert("Fill Out Account Information");
       this.dashboardForm = this.fb.group({
         firstName: [LoginComponent.userDataLogin.firstName ? LoginComponent.userDataLogin.firstName : '', Validators.required],
         lastName: [LoginComponent.userDataLogin.lastName ? LoginComponent.userDataLogin.lastName : '', Validators.required],
@@ -142,7 +146,7 @@ export class DashboardComponent {
       })
     }
     else {
-      alert("populating user info");
+      //alert('populating profile');
       this.dashboardForm = this.fb.group({
         firstName: [LoginComponent.userDataLogin.firstName, Validators.required],
         lastName: [LoginComponent.userDataLogin.lastName, Validators.required],
@@ -152,14 +156,16 @@ export class DashboardComponent {
         state: [LoginComponent.userDataLogin.state, Validators.required],
         zip: [LoginComponent.userDataLogin.zipcode, Validators.required],
 
-        deliveryAddress:[LoginComponent.userDataLogin.addressOne ? LoginComponent.userDataLogin.addressOne : ''],
-        suggestedPrice:[2],
-        totalAmountDue:[10],
+        deliveryAddress: [LoginComponent.userDataLogin.addressOne ? LoginComponent.userDataLogin.addressOne : ''],
+        suggestedPrice: [2],
+        totalAmountDue: [10],
         gallons: ['', Validators.required],
         deliveryDate: ['', Validators.required]
       })
-      this.name = LoginComponent.userDataLogin.firstName;
+
     }
+
+    this.localSt.store('userInfo', LoginComponent.userDataLogin)
 
   }
 
@@ -211,16 +217,18 @@ export class DashboardComponent {
         this.dashboardForm.controls['deliveryDate'].reset();
       })
 
-    //I might need to have it to where gallon changes each time the gallons get incremented or not some might need a refresh
+    //location.reload();
+
+    //I might need to have it to where gallon changes each time the gallons get incremented or not some might need a refresh idk
   }
 
-  getCurUserOrders(){
+  getCurUserOrders() {
     this.auth.getOrders(LoginComponent.userDataLogin.clientID)
-    .subscribe(res=>{
-      this.orderData = res.orderDetails;
-    })
+      .subscribe(res => {
+        this.orderData = res.orderDetails;
+      })
 
-    
+
   }
 }
 
