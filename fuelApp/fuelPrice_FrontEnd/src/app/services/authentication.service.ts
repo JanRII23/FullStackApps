@@ -28,9 +28,13 @@ export class AuthenticationService {
     return this.http.put<any>(`${this.baseUrl}updateAccount`, userObj);
   }
 
-  // currentUser(userObj:any){
-  //   return this.http.post<any>(`${this.baseUrl}currentUser`, userObj);
-  // }
+  addOrder(orderObj:any){
+    return this.http.post<any>(`${this.baseUrl}addOrder`, orderObj);
+  }
+
+  getOrders(orderObj:any){
+    return this.http.get<any>(`${this.baseUrl}GetCurUserOrders?clientID=${orderObj}`);
+  }
 
   isLoggedIn(): boolean{
     return this.loggedIn; //return true

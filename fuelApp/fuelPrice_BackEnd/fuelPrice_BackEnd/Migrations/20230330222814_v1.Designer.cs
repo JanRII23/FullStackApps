@@ -11,7 +11,7 @@ using fuelPrice_BackEnd.Context;
 namespace fuelPriceBackEnd.Migrations
 {
     [DbContext(typeof(fuelDatabaseContext))]
-    [Migration("20230303035411_v1")]
+    [Migration("20230330222814_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -23,6 +23,42 @@ namespace fuelPriceBackEnd.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("fuelPrice_BackEnd.Models.Pricing", b =>
+                {
+                    b.Property<int>("orderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("orderID"));
+
+                    b.Property<int>("clientID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("deliveryAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("deliveryDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("gallonsOrdered")
+                        .HasColumnType("int");
+
+                    b.Property<int>("orderNumber")
+                        .HasColumnType("int");
+
+                    b.Property<float>("pricePerGallon")
+                        .HasColumnType("real");
+
+                    b.Property<float>("totalAmountDue")
+                        .HasColumnType("real");
+
+                    b.HasKey("orderID");
+
+                    b.HasIndex("clientID");
+
+                    b.ToTable("orders", (string)null);
+                });
 
             modelBuilder.Entity("fuelPrice_BackEnd.Models.User", b =>
                 {
@@ -68,6 +104,17 @@ namespace fuelPriceBackEnd.Migrations
                     b.HasKey("clientID");
 
                     b.ToTable("users", (string)null);
+                });
+
+            modelBuilder.Entity("fuelPrice_BackEnd.Models.Pricing", b =>
+                {
+                    b.HasOne("fuelPrice_BackEnd.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("clientID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

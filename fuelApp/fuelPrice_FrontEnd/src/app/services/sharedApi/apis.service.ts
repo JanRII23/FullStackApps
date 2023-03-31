@@ -11,10 +11,10 @@ export class ApisService {
   constructor(private http : HttpClient) { }
 
   GetUsers(){
-    return this.http.get<any>(`${this.baseUrl}getAllUsers`)
+    return this.http.get<any>(`${this.baseUrl}getAllUsers`);
   }
 
   GetOrders(){
-    return this.http.get<any>(`${this.baseUrl}getAllOrders`)
+    return this.http.get<any>(`${this.baseUrl}getAllOrders`);
   }
 }

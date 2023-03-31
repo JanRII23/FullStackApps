@@ -129,7 +129,7 @@ namespace fuelPrice_UnitTests.Controller
                 deliveryDate = "3/22/23",
                 pricePerGallon = 10,
                 totalAmountDue = 20,
-                userClientId = 1
+                clientID = 1
             };
 
             //Act

@@ -17,9 +17,8 @@ namespace fuelPrice_BackEnd.Models
         public float pricePerGallon { get; set; }   
         public float totalAmountDue { get; set; }
 
-        public int? userClientId { get; set; }
-
-        [ForeignKey("userClientId")]
+        public int clientID { get; set; }
+        [ForeignKey("clientID")]
         public virtual User User { get; set; }  //client ID as foreign key --> this is the thing that the user table needs to reference??
 
     }

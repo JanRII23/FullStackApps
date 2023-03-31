@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { LoginComponent } from '../login/login.component';
+import { OrderModel } from './order.model';
 import { UserModel } from './user.model';
 
 @Component({
@@ -13,11 +14,14 @@ import { UserModel } from './user.model';
 export class DashboardComponent {
 
   userObj: UserModel = new UserModel();
+  orderObj: OrderModel = new OrderModel();
 
-  orderHistoryData = [
-    { userId: 1, orderNum: 54321, gallonsReq: 6.0, deliAddress: "123 Wallstreet, Houston, Texas (TX)", deliDate: "02/20/2023", priceGal: "$40.00", totalPrice: "$120" },
-    { userId: 2, orderNum: 24680, gallonsReq: 4.0, deliAddress: "987 Apple St, Dallas, Texas (TX)", deliDate: "02/21/2023", priceGal: "$40.00", totalPrice: "$80.00" }
-  ];
+  orderData !: any;
+
+  // orderHistoryData = [
+  //   { userId: 1, orderNum: 54321, gallonsReq: 6.0, deliAddress: "123 Wallstreet, Houston, Texas (TX)", deliDate: "02/20/2023", priceGal: "$40.00", totalPrice: "$120" },
+  //   { userId: 2, orderNum: 24680, gallonsReq: 4.0, deliAddress: "987 Apple St, Dallas, Texas (TX)", deliDate: "02/21/2023", priceGal: "$40.00", totalPrice: "$80.00" }
+  // ];
 
   searchOrder = '';
 
@@ -98,6 +102,7 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     this.populateProfile();
+    this.getCurUserOrders();
 
   }
 
@@ -137,7 +142,7 @@ export class DashboardComponent {
       })
     }
     else {
-      alert("works");
+      alert("populating user info");
       this.dashboardForm = this.fb.group({
         firstName: [LoginComponent.userDataLogin.firstName, Validators.required],
         lastName: [LoginComponent.userDataLogin.lastName, Validators.required],
@@ -147,6 +152,9 @@ export class DashboardComponent {
         state: [LoginComponent.userDataLogin.state, Validators.required],
         zip: [LoginComponent.userDataLogin.zipcode, Validators.required],
 
+        deliveryAddress:[LoginComponent.userDataLogin.addressOne ? LoginComponent.userDataLogin.addressOne : ''],
+        suggestedPrice:[2],
+        totalAmountDue:[10],
         gallons: ['', Validators.required],
         deliveryDate: ['', Validators.required]
       })
@@ -164,13 +172,13 @@ export class DashboardComponent {
     this.userObj.userName = LoginComponent.userDataLogin.userName;
     this.userObj.password = LoginComponent.userDataLogin.password;
     this.userObj.passwordVerification = LoginComponent.userDataLogin.passwordVerification;
-    this.userObj.firstName = this.dashboardForm.controls['firstName'].value
-    this.userObj.lastName = this.dashboardForm.controls['lastName'].value
-    this.userObj.addressOne = this.dashboardForm.controls['addressOne'].value
-    this.userObj.addressTwo = this.dashboardForm.controls['addressTwo'].value
-    this.userObj.city = this.dashboardForm.controls['city'].value
-    this.userObj.state = this.dashboardForm.controls['state'].value
-    this.userObj.zipcode = this.dashboardForm.controls['zip'].value
+    this.userObj.firstName = this.dashboardForm.controls['firstName'].value;
+    this.userObj.lastName = this.dashboardForm.controls['lastName'].value;
+    this.userObj.addressOne = this.dashboardForm.controls['addressOne'].value;
+    this.userObj.addressTwo = this.dashboardForm.controls['addressTwo'].value;
+    this.userObj.city = this.dashboardForm.controls['city'].value;
+    this.userObj.state = this.dashboardForm.controls['state'].value;
+    this.userObj.zipcode = this.dashboardForm.controls['zip'].value;
 
 
     //unlike the form this is passing in the model
@@ -186,9 +194,33 @@ export class DashboardComponent {
   submitRequest() {
 
     //once user inputs gallons and delivery date then submit request then it would automatically populate it with delivery address, suggested price, and total amount due --> then there would be a popup that comes up that says confirm or cancel to be added to order history
-
     //resets the form and then adds to the quote history
 
+    this.orderObj.orderNumber = Math.floor(Math.random() * 11000);
+    this.orderObj.gallonsOrdered = this.dashboardForm.controls['gallons'].value;
+    this.orderObj.deliveryAddress = this.dashboardForm.controls['addressOne'].value;
+    this.orderObj.deliveryDate = this.dashboardForm.controls['deliveryDate'].value;
+    this.orderObj.pricePerGallon = 2.0;
+    this.orderObj.totalAmountDue = 10.0;
+    this.orderObj.clientID = LoginComponent.userDataLogin.clientID;
+
+    this.auth.addOrder(this.orderObj)
+      .subscribe(res => {
+        alert(res.message);
+        this.dashboardForm.controls['gallons'].reset();
+        this.dashboardForm.controls['deliveryDate'].reset();
+      })
+
+    //I might need to have it to where gallon changes each time the gallons get incremented or not some might need a refresh
+  }
+
+  getCurUserOrders(){
+    this.auth.getOrders(LoginComponent.userDataLogin.clientID)
+    .subscribe(res=>{
+      this.orderData = res.orderDetails;
+    })
+
+    
   }
 }
 

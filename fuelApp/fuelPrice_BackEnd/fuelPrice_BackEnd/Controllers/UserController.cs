@@ -167,18 +167,26 @@ namespace fuelPrice_BackEnd.Controllers
         }*/
 
         [HttpPost("addOrder")]
-        public IActionResult AddOrder([FromBody] Pricing userObj)
+        public IActionResult AddOrder([FromBody] Pricing orderObj)
         {
 
-            if (userObj == null)
+            if (orderObj == null)
             {
                 return BadRequest();
             }
             else
             {
-                _authContext.Orders.Add(userObj);
-                _authContext.SaveChanges();
-   
+
+                /*var user = _authContext.Users.AsNoTracking().FirstOrDefault(x => x.clientID == orderObj.clientID);
+
+                orderObj.User = user;*/
+
+                /* _authContext.Orders.Add(userObj);
+                 _authContext.SaveChanges();*/
+
+                _authContext.Orders.AddAsync(orderObj);
+                _authContext.SaveChangesAsync();
+
                 return Ok(new
                 {
                     StatusCode = 200,
@@ -190,11 +198,11 @@ namespace fuelPrice_BackEnd.Controllers
 
         [HttpGet("GetCurUserOrders")]
 
-        public IActionResult GetCurUserOrders()
+        public IActionResult GetCurUserOrders(int clientID)
         {
             //referring to the foreign key from the table
 
-            var allOrders = _authContext.Orders.AsQueryable();
+            var allOrders = _authContext.Orders.AsQueryable().Where(x => x.clientID == clientID);
 
             if (allOrders == null)
             {
@@ -217,5 +225,6 @@ namespace fuelPrice_BackEnd.Controllers
         //deleteOrders, getOrders, get_id from admin side
 
     }
+
 
 }
