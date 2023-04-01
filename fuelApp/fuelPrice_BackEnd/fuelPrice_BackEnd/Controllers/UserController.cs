@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace fuelPrice_BackEnd.Controllers
 {
@@ -177,13 +178,6 @@ namespace fuelPrice_BackEnd.Controllers
             else
             {
 
-                /*var user = _authContext.Users.AsNoTracking().FirstOrDefault(x => x.clientID == orderObj.clientID);
-
-                orderObj.User = user;*/
-
-                /* _authContext.Orders.Add(userObj);
-                 _authContext.SaveChanges();*/
-
                 _authContext.Orders.AddAsync(orderObj);
                 _authContext.SaveChangesAsync();
 
@@ -204,13 +198,14 @@ namespace fuelPrice_BackEnd.Controllers
 
             var allOrders = _authContext.Orders.AsQueryable().Where(x => x.clientID == clientID);
 
-            if (allOrders == null)
+            if (allOrders.IsNullOrEmpty())
             {
                 return NotFound(new
                 {
                     StatusCode = 404,
                     Message = "User/Account does not exists"
                 });
+                //return BadRequest();
             }
 
             return Ok(new
@@ -219,8 +214,6 @@ namespace fuelPrice_BackEnd.Controllers
                 orderDetails = allOrders
             });
         }
-
-
 
         //deleteOrders, getOrders, get_id from admin side
 
