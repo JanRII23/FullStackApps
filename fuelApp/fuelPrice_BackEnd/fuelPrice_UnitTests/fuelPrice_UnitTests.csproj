@@ -30,4 +30,8 @@
     <ProjectReference Include="..\fuelPrice_BackEnd\fuelPrice_BackEnd.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

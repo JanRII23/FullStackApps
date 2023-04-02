@@ -77,7 +77,7 @@ namespace fuelPrice_UnitTests.Controller
         {
               
             // Act
-            var result = controller.GetAllUsers();
+            var result = controller.GetAllOrders();
 
             // Assert
             Assert.IsType<OkObjectResult>(result as OkObjectResult);

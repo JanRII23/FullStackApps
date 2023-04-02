@@ -116,6 +116,34 @@ namespace fuelPrice_UnitTests.Controller
         }
 
         [Fact]
+        public void UpdateAccount_ActionExecutes_ReturnOk()
+        {
+            //Arrange
+
+            var updateUser = new User
+            {
+                clientID = 1,
+                userName = "Jane",
+                password = "Jane23",
+                passwordVerification = "Jane23",
+                accessLevel = 0,
+                firstName = "Jane",
+                lastName = "Doe",
+                addressOne = "Road Street",
+                addressTwo = "Road Drive",
+                city = "Country Road",
+                state = "TX",
+                zipcode = 54321
+            };
+
+            //Act
+            var result = controller.updateAccount(updateUser);
+
+            //Assert
+            result.Should().NotBeNull();
+        }
+
+        [Fact]
         public void UpdateAccount_ActionExecutes_ReturnsBadRequest()
         {
             //Arrange
