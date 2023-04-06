@@ -167,6 +167,88 @@ namespace fuelPrice_BackEnd.Controllers
             });
         }*/
 
+        [HttpPost("getQuote")]
+        public IActionResult GetQuote([FromBody] Pricing orderObj)
+        {
+
+           // this should technically only receive gallons, delivery address, delivery date but populates into database setting pricepergallaon, totalDue as null
+
+            // I could just set object properties and return entire object
+
+            if (orderObj == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+
+                /*
+                _authContext.Orders.AddAsync(orderObj);
+                _authContext.SaveChangesAsync();*/
+                //orderObj.pricePerGallon = 2;
+
+                var user = _authContext.Users.AsNoTracking().FirstOrDefault(x => x.clientID == orderObj.clientID);
+
+                var gallonFactor = 0.0;
+
+                if (orderObj.gallonsOrdered > 1000)
+                {
+                    gallonFactor = 0.02;
+                }
+                else
+                {
+                    gallonFactor = 0.03;
+                }
+
+                orderObj.pricePerGallon = (float)(1.5 + PricingModule(user, gallonFactor));
+
+                orderObj.totalAmountDue = orderObj.gallonsOrdered * orderObj.pricePerGallon;
+
+                return Ok(new
+                {
+                    StatusCode = 200,
+                    Message = "Quote Requested",
+                    orderRequest = orderObj
+
+                });
+
+                //should return suggestd price and total amount due and populate to the form on refresh and all values should be there and then on submit reset form
+                //but on refresh should still keep properties before submitting
+            }
+        }
+
+        private double PricingModule(User userObj, double galFactor)
+        {
+
+            double locationFactor = 0.0, 
+                rateHistoryFactor = 0.01, 
+                gallonRequestFactor = galFactor,
+                companyProfitFactor = 0.1,
+                pricePerGallon = 1.50;
+
+            var allOrders = _authContext.Orders.AsQueryable().Where(x => x.clientID == userObj.clientID);
+
+            if (userObj.state == "TX")
+            {
+                locationFactor = 0.02;
+            }
+            else
+            {
+                locationFactor = 0.04;
+            }
+
+            if (allOrders.IsNullOrEmpty())
+            {
+                rateHistoryFactor = 0.0;
+            }
+
+
+            double margin = pricePerGallon * ((locationFactor - rateHistoryFactor) + gallonRequestFactor + companyProfitFactor);
+
+            return margin;
+        }
+
+
         [HttpPost("addOrder")]
         public IActionResult AddOrder([FromBody] Pricing orderObj)
         {
@@ -176,7 +258,7 @@ namespace fuelPrice_BackEnd.Controllers
                 return BadRequest();
             }
             else
-            {
+            { //once get request is done and valid on this click it finds the first instance of orderID and then updates it 
 
                 _authContext.Orders.AddAsync(orderObj);
                 _authContext.SaveChangesAsync();

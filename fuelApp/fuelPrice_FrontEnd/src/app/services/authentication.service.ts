@@ -28,6 +28,10 @@ export class AuthenticationService {
     return this.http.put<any>(`${this.baseUrl}updateAccount`, userObj);
   }
 
+  getQuote(orderObj:any){
+    return this.http.post<any>(`${this.baseUrl}getQuote`, orderObj);
+  }
+
   addOrder(orderObj:any){
     return this.http.post<any>(`${this.baseUrl}addOrder`, orderObj);
   }

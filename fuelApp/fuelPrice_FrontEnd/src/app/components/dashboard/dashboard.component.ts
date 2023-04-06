@@ -16,8 +16,10 @@ export class DashboardComponent {
 
   userObj: UserModel = new UserModel();
   orderObj: OrderModel = new OrderModel();
+  submitOrderObj: OrderModel = new OrderModel();
 
   orderData !: any;
+  orderRequestData !: any;
 
   // orderHistoryData = [
   //   { userId: 1, orderNum: 54321, gallonsReq: 6.0, deliAddress: "123 Wallstreet, Houston, Texas (TX)", deliDate: "02/20/2023", priceGal: "$40.00", totalPrice: "$120" },
@@ -36,6 +38,9 @@ export class DashboardComponent {
 
   name: string = "Unknown";
   profileCheck: string = "Update";
+
+  buttonTypeQuote: string = "btn-danger";
+  buttonTypeSubmit: string = "btn-danger";
 
   states = {
     "Alabama": "AL",
@@ -101,6 +106,15 @@ export class DashboardComponent {
       this.getCurUserOrders();
     }
 
+    var orderData = this.localSt.retrieve("orderInfo");
+    if (orderData){
+
+      this.orderObj = orderData;
+      this.buttonTypeSubmit = "btn-success";
+      this.localSt.clear('orderInfo');
+      
+    }
+
   }
 
   ngOnInit(): void {
@@ -128,6 +142,7 @@ export class DashboardComponent {
     this.auth.logoutUser();
     this.router.navigate(['login']);
     this.localSt.clear('userInfo');
+    this.localSt.clear('orderInfo');
   }
 
   populateProfile() {
@@ -157,10 +172,10 @@ export class DashboardComponent {
         zip: [LoginComponent.userDataLogin.zipcode, Validators.required],
 
         deliveryAddress: [LoginComponent.userDataLogin.addressOne ? LoginComponent.userDataLogin.addressOne : ''],
-        suggestedPrice: [2],
-        totalAmountDue: [10],
-        gallons: ['', Validators.required],
-        deliveryDate: ['', Validators.required]
+        suggestedPrice: [this.orderObj.pricePerGallon ? this.orderObj.pricePerGallon : 0],
+        totalAmountDue: [this.orderObj.totalAmountDue ? this.orderObj.totalAmountDue : 0],
+        gallons: [this.orderObj.gallonsOrdered ? this.orderObj.gallonsOrdered: 0, Validators.required],
+        deliveryDate: [this.orderObj.deliveryDate ? this.orderObj.deliveryDate: '', Validators.required]
       })
 
     }
@@ -168,9 +183,6 @@ export class DashboardComponent {
     this.localSt.store('userInfo', LoginComponent.userDataLogin)
 
   }
-
-
-
 
   refreshProfileUpdate() {
 
@@ -197,18 +209,57 @@ export class DashboardComponent {
 
   }
 
+  getRequest() {
+    
+    if (this.dashboardForm.controls['gallons'].value > 0 &&  this.dashboardForm.controls['addressOne'].value != "" && this.dashboardForm.controls['deliveryDate'].value != ""){
+      //check this logic and then add api and make sure to return values
+      //this.buttonTypeQuote = "btn-success";
+      this.orderObj.orderNumber = Math.floor(Math.random() * 21000);
+      this.orderObj.gallonsOrdered = this.dashboardForm.controls['gallons'].value;
+      this.orderObj.deliveryAddress = this.dashboardForm.controls['addressOne'].value;
+      this.orderObj.deliveryDate = this.dashboardForm.controls['deliveryDate'].value;
+      this.orderObj.clientID = LoginComponent.userDataLogin.clientID;
+
+      this.auth.getQuote(this.orderObj)
+      .subscribe(res => {
+        alert(res.message);
+        this.orderRequestData = res.orderRequest;
+        alert(JSON.stringify(this.orderRequestData));
+        this.localSt.store('orderInfo', this.orderRequestData)
+        window.location.reload();
+      })
+
+    }
+    else{
+      alert("Request gallon amount > 0, a valid delivery date, or update account address");
+      //this.buttonTypeQuote = "btn-danger";
+    }
+  }
+
+  buttonChange(){
+    
+    if (this.dashboardForm.controls['gallons'].value > 0 &&  this.dashboardForm.controls['addressOne'].value != "" && this.dashboardForm.controls['deliveryDate'].value != ""){
+      this.buttonTypeQuote = "btn-success";
+    }
+    else{
+      this.buttonTypeQuote = "btn-danger";
+    }
+  }
+
   submitRequest() {
 
     //once user inputs gallons and delivery date then submit request then it would automatically populate it with delivery address, suggested price, and total amount due --> then there would be a popup that comes up that says confirm or cancel to be added to order history
     //resets the form and then adds to the quote history
 
-    this.orderObj.orderNumber = Math.floor(Math.random() * 11000);
-    this.orderObj.gallonsOrdered = this.dashboardForm.controls['gallons'].value;
-    this.orderObj.deliveryAddress = this.dashboardForm.controls['addressOne'].value;
-    this.orderObj.deliveryDate = this.dashboardForm.controls['deliveryDate'].value;
-    this.orderObj.pricePerGallon = 2.0;
-    this.orderObj.totalAmountDue = 10.0;
-    this.orderObj.clientID = LoginComponent.userDataLogin.clientID;
+    // this.orderObj.orderNumber = Math.floor(Math.random() * 11000);
+    // this.orderObj.gallonsOrdered = this.dashboardForm.controls['gallons'].value;
+    // this.orderObj.deliveryAddress = this.dashboardForm.controls['addressOne'].value;
+    // this.orderObj.deliveryDate = this.dashboardForm.controls['deliveryDate'].value;
+    // this.orderObj.pricePerGallon = 2.0;
+    // this.orderObj.totalAmountDue = 10.0;
+    // this.orderObj.clientID = LoginComponent.userDataLogin.clientID;
+
+    this.submitOrderObj = this.orderObj;
 
     this.auth.addOrder(this.orderObj)
       .subscribe(res => {
