@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { verifyPassword } from 'src/app/helpers/passwordMatch';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -16,7 +17,7 @@ export class SignupComponent {
   lockIcon: string = "lock";
   signupForm! : FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router){
+  constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router, private  toast: NgToastService){
   
   }
 
@@ -40,12 +41,14 @@ export class SignupComponent {
       this.auth.signUp(this.signupForm.value)
         .subscribe({
           next:(res)=>{
-            alert(res.message);
+            // alert(res.message);
+            this.toast.info({detail:"SUCCESS", summary:res.message, duration:5000});
             this.signupForm.reset();
             this.router.navigate(['login']);
           },
           error:(err)=>{
-            alert(err?.error.message);
+            //alert(err?.error.message);
+            this.toast.error({detail:"ERROR", summary:err?.error.message, duration:5000});
           }
 
         })

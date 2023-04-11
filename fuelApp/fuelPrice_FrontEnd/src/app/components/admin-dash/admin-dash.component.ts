@@ -4,6 +4,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ApisService } from 'src/app/services/sharedApi/apis.service';
 import { UserModel } from './admin-dash.model'
 import { OrderModel } from './admin-dash.model';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-admin-dash',
@@ -19,7 +20,7 @@ export class AdminDashComponent implements OnInit{
   userObj : UserModel = new UserModel();
   orderObj: OrderModel = new OrderModel();
 
-  constructor(private api: ApisService, private auth:AuthenticationService, private router: Router){
+  constructor(private api: ApisService, private auth:AuthenticationService, private router: Router, private  toast: NgToastService){
 
   }
 
@@ -61,6 +62,7 @@ export class AdminDashComponent implements OnInit{
   logout(){
     this.auth.logoutUser();
     this.router.navigate(['login']);
+    this.toast.info({detail:"SUCCESS",summary:'Logged Out', duration: 5000});
   }
 
   getUserInformation(){

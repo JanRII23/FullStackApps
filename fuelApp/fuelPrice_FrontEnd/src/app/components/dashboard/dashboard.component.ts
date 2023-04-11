@@ -6,6 +6,7 @@ import { LoginComponent } from '../login/login.component';
 import { OrderModel } from './order.model';
 import { UserModel } from './user.model';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-dashboard',
@@ -97,7 +98,7 @@ export class DashboardComponent {
 
 
 
-  constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router, private localSt: LocalStorageService) {
+  constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router, private localSt: LocalStorageService, private  toast: NgToastService) {
 
     var data = this.localSt.retrieve('userInfo');
     if (data) {
@@ -143,6 +144,7 @@ export class DashboardComponent {
     this.router.navigate(['login']);
     this.localSt.clear('userInfo');
     this.localSt.clear('orderInfo');
+    this.toast.info({detail:"SUCCESS",summary:'Logged Out', duration: 5000});
   }
 
   populateProfile() {
@@ -204,11 +206,14 @@ export class DashboardComponent {
     //unlike the form this is passing in the model
     this.auth.updateInformation(this.userObj)
       .subscribe(res => {
-        alert("Updated Successfully");
+        //alert("Updated Successfully");
+              
+    this.toast.info({detail:"SUCCESS", summary:res.message, duration:5000});
       })
 
-    window.location.reload();
-      
+    
+    //window.location.reload();
+
 
   }
 
@@ -225,7 +230,8 @@ export class DashboardComponent {
 
       this.auth.getQuote(this.orderObj)
       .subscribe(res => {
-        alert(res.message);
+        //alert(res.message);
+        this.toast.info({detail:"SUCCESS", summary:res.message, duration:5000});
         this.orderRequestData = res.orderRequest;
         alert(JSON.stringify(this.orderRequestData));
         this.localSt.store('orderInfo', this.orderRequestData)
@@ -234,7 +240,8 @@ export class DashboardComponent {
 
     }
     else{
-      alert("Request gallon amount > 0, a valid delivery date, or update account address");
+      // alert("Request gallon amount > 0, a valid delivery date, or update account address");
+      this.toast.error({detail:"ERROR", summary:"Fill required fields or update address", duration:5000});
       //this.buttonTypeQuote = "btn-danger";
     }
   }
@@ -264,12 +271,19 @@ export class DashboardComponent {
 
     this.submitOrderObj = this.orderObj;
 
-    this.auth.addOrder(this.orderObj)
+
+    if (this.dashboardForm.controls['gallons'].value > 0 &&  this.dashboardForm.controls['addressOne'].value != "" && this.dashboardForm.controls['deliveryDate'].value != ""){
+      this.auth.addOrder(this.orderObj)
       .subscribe(res => {
-        alert(res.message);
+        //alert(res.message);
+        this.toast.info({detail:"SUCCESS", summary:res.message, duration:5000});
         this.dashboardForm.controls['gallons'].reset();
         this.dashboardForm.controls['deliveryDate'].reset();
       })
+    }else{
+      this.toast.error({detail:"ERROR", summary:"Request Quote", duration:5000});
+    }
+    
 
       //this.localSt.clear('orderInfo');
 

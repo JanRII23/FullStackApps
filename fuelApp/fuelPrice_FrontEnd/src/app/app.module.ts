@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchPipe } from './search.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxWebstorageModule } from 'ngx-webstorage';
+import { NgToastModule } from 'ng-angular-popup';
  
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    NgxWebstorageModule.forRoot()
+    NgxWebstorageModule.forRoot(),
+    NgToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]

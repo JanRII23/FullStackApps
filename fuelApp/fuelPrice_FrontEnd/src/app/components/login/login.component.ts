@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
@@ -21,7 +22,7 @@ export class LoginComponent {
   test: number = 33;
 
 
-  constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router) {
+  constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router, private  toast: NgToastService) {
     
   }
 
@@ -44,7 +45,9 @@ export class LoginComponent {
         this.auth.login(this.loginForm.value)
         .subscribe({
           next:(res)=>{
-            alert(res.message);
+            // alert(res.message);
+            this.toast.info({detail:"SUCCESS", summary:res.message, duration:5000});
+
             LoginComponent.userDataLogin = res.user; //this receives the json object
   
             this.loginForm.reset();
@@ -58,7 +61,8 @@ export class LoginComponent {
             
           },
           error:(err)=>{
-            alert(err?.error.message);
+            // alert(err?.error.message);
+            this.toast.error({detail:"ERROR", summary:err?.error.message, duration:5000});
           }
 
         })
