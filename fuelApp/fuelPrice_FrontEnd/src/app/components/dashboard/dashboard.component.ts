@@ -199,13 +199,16 @@ export class DashboardComponent {
     this.userObj.zipcode = this.dashboardForm.controls['zip'].value;
 
 
+    this.localSt.store('userInfo', this.userObj);
+
     //unlike the form this is passing in the model
     this.auth.updateInformation(this.userObj)
       .subscribe(res => {
         alert("Updated Successfully");
       })
 
-
+    window.location.reload();
+      
 
   }
 
@@ -267,6 +270,8 @@ export class DashboardComponent {
         this.dashboardForm.controls['gallons'].reset();
         this.dashboardForm.controls['deliveryDate'].reset();
       })
+
+      //this.localSt.clear('orderInfo');
 
     //location.reload();
 
