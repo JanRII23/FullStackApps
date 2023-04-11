@@ -251,5 +251,129 @@ namespace fuelPrice_UnitTests.Controller
 
         }
 
+
+        [Fact]
+        public void GetQuoteTX_ActionExecutes_ReturnsOk()
+        {
+
+            //Arrange
+            var userModel = new User
+            {
+                clientID = 2,
+                userName = "John",
+                password = "John23",
+                passwordVerification = "John23",
+                accessLevel = 0,
+                firstName = "John",
+                lastName = "Doe",
+                addressOne = "Lane Street",
+                addressTwo = "Lane Drive",
+                city = "Country Road",
+                state = "TX",
+                zipcode = 12345
+            };
+
+            //Act
+
+            context.Users.Add(userModel);
+            context.SaveChanges();
+
+            //Arrange
+            var pricingModel = new Pricing
+            {
+                orderID = 2,
+                orderNumber = 205621,
+                gallonsOrdered = 1500,
+                deliveryAddress = "Fury Lane",
+                deliveryDate = "3/22/23",
+                pricePerGallon = 0,
+                totalAmountDue = 0,
+                clientID = 2
+            };
+
+            //Act
+            var result = controller.GetQuote(pricingModel);
+
+            //Assert
+            Assert.IsType<OkObjectResult>(result as OkObjectResult);
+
+        }
+
+        [Fact]
+        public void GetQuoteNotTX_ActionExecutes_ReturnsOk()
+        {
+
+            //Arrange
+            var userModel = new User
+            {
+                clientID = 3,
+                userName = "Jane",
+                password = "Doe23",
+                passwordVerification = "Doe23",
+                accessLevel = 0,
+                firstName = "Jane",
+                lastName = "Doe",
+                addressOne = "Dover Street",
+                addressTwo = "High Drive",
+                city = "City Road",
+                state = "NY",
+                zipcode = 87984
+            };
+
+            //Act
+
+            context.Users.Add(userModel);
+            context.SaveChanges();
+
+            //Arrange
+            var pricingModel = new Pricing
+            {
+                orderID = 2,
+                orderNumber = 205621,
+                gallonsOrdered = 500,
+                deliveryAddress = "Dover Street",
+                deliveryDate = "/10/23",
+                pricePerGallon = 0,
+                totalAmountDue = 0,
+                clientID = 3
+            };
+
+            //Act
+            var result = controller.GetQuote(pricingModel);
+
+            //Assert
+            Assert.IsType<OkObjectResult>(result as OkObjectResult);
+
+        }
+
+        [Fact]
+        public void GetQuote_ActionExecutes_ReturnsBadRequest()
+        {
+
+            //Arrange
+            var pricingModel = new Pricing
+            {
+                orderID = 2,
+                orderNumber = 205621,
+                gallonsOrdered = 3,
+                deliveryAddress = "Fury Lane",
+                deliveryDate = "3/22/23",
+                pricePerGallon = 10,
+                totalAmountDue = 20,
+                clientID = 1
+            };
+
+            pricingModel = null;
+
+            //Act
+            var result = controller.GetQuote(pricingModel);
+
+            //Assert
+            Assert.IsType<BadRequestResult>(result as BadRequestResult);
+
+            //Assert
+        }
+
+
     }
 }
