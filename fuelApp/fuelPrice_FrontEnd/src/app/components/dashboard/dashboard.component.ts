@@ -107,13 +107,13 @@ export class DashboardComponent {
       this.getCurUserOrders();
     }
 
-    var orderData = this.localSt.retrieve("orderInfo");
+    var orderData = this.localSt.retrieve('orderInfo');
     if (orderData){
 
       this.orderObj = orderData;
       this.buttonTypeSubmit = "btn-success";
-      this.localSt.clear('orderInfo');
-      
+      //this.localSt.clear('orderInfo');
+
     }
 
   }
@@ -140,15 +140,16 @@ export class DashboardComponent {
   }
 
   logout() {
-    this.auth.logoutUser();
+    //this.auth.logoutUser();
     this.router.navigate(['login']);
-    this.localSt.clear('userInfo');
-    this.localSt.clear('orderInfo');
+    // this.localSt.clear('userInfo');
+    // this.localSt.clear('orderInfo');
     this.toast.info({detail:"SUCCESS",summary:'Logged Out', duration: 5000});
   }
 
   populateProfile() {
     if (LoginComponent.userDataLogin.firstName == "" || LoginComponent.userDataLogin.lastName == "" || LoginComponent.userDataLogin.addressOne == "" || LoginComponent.userDataLogin.city == "" || LoginComponent.userDataLogin.state == "" || LoginComponent.userDataLogin.zipcode == 0) {
+      this.toast.error({detail:"REQUIRED",summary:'Complete Profile', duration: 5000});
       this.dashboardForm = this.fb.group({
         firstName: [LoginComponent.userDataLogin.firstName ? LoginComponent.userDataLogin.firstName : '', Validators.required],
         lastName: [LoginComponent.userDataLogin.lastName ? LoginComponent.userDataLogin.lastName : '', Validators.required],
@@ -158,12 +159,12 @@ export class DashboardComponent {
         state: [LoginComponent.userDataLogin.state ? LoginComponent.userDataLogin.state : '', Validators.required],
         zip: [LoginComponent.userDataLogin.zipcode ? LoginComponent.userDataLogin.zipcode : '', Validators.required],
 
-        gallons: ['', Validators.required],
+        gallons: [0, Validators.required],
         deliveryDate: ['', Validators.required]
       })
     }
     else {
-      //alert('populating profile');
+      // this.toast.success({detail:"NOTE",summary:'Populating Profile', duration: 5000});
       this.dashboardForm = this.fb.group({
         firstName: [LoginComponent.userDataLogin.firstName, Validators.required],
         lastName: [LoginComponent.userDataLogin.lastName, Validators.required],
@@ -173,7 +174,7 @@ export class DashboardComponent {
         state: [LoginComponent.userDataLogin.state, Validators.required],
         zip: [LoginComponent.userDataLogin.zipcode, Validators.required],
 
-        deliveryAddress: [LoginComponent.userDataLogin.addressOne ? LoginComponent.userDataLogin.addressOne : ''],
+        deliveryAddress: [LoginComponent.userDataLogin.addressOne ? LoginComponent.userDataLogin.addressOne + " " + LoginComponent.userDataLogin.city + " " + LoginComponent.userDataLogin.state + " " + LoginComponent.userDataLogin.zipcode: ''],
         suggestedPrice: [this.orderObj.pricePerGallon ? this.orderObj.pricePerGallon : 0],
         totalAmountDue: [this.orderObj.totalAmountDue ? this.orderObj.totalAmountDue : 0],
         gallons: [this.orderObj.gallonsOrdered ? this.orderObj.gallonsOrdered: 0, Validators.required],
@@ -200,7 +201,6 @@ export class DashboardComponent {
     this.userObj.state = this.dashboardForm.controls['state'].value;
     this.userObj.zipcode = this.dashboardForm.controls['zip'].value;
 
-
     this.localSt.store('userInfo', this.userObj);
 
     //unlike the form this is passing in the model
@@ -210,8 +210,7 @@ export class DashboardComponent {
               
     this.toast.info({detail:"SUCCESS", summary:res.message, duration:5000});
       })
-
-    
+  
     //window.location.reload();
 
 
@@ -220,11 +219,9 @@ export class DashboardComponent {
   getRequest() {
     
     if (this.dashboardForm.controls['gallons'].value > 0 &&  this.dashboardForm.controls['addressOne'].value != "" && this.dashboardForm.controls['deliveryDate'].value != ""){
-      //check this logic and then add api and make sure to return values
-      //this.buttonTypeQuote = "btn-success";
       this.orderObj.orderNumber = Math.floor(Math.random() * 21000);
       this.orderObj.gallonsOrdered = this.dashboardForm.controls['gallons'].value;
-      this.orderObj.deliveryAddress = this.dashboardForm.controls['addressOne'].value;
+      this.orderObj.deliveryAddress = this.dashboardForm.controls['addressOne'].value + " " + this.dashboardForm.controls['city'].value + " " + this.dashboardForm.controls['state'].value + " " + this.dashboardForm.controls['zip'].value.toString();
       this.orderObj.deliveryDate = this.dashboardForm.controls['deliveryDate'].value;
       this.orderObj.clientID = LoginComponent.userDataLogin.clientID;
 
@@ -233,14 +230,13 @@ export class DashboardComponent {
         //alert(res.message);
         this.toast.info({detail:"SUCCESS", summary:res.message, duration:5000});
         this.orderRequestData = res.orderRequest;
-        alert(JSON.stringify(this.orderRequestData));
+        //alert(JSON.stringify(this.orderRequestData));
         this.localSt.store('orderInfo', this.orderRequestData)
         window.location.reload();
       })
 
     }
     else{
-      // alert("Request gallon amount > 0, a valid delivery date, or update account address");
       this.toast.error({detail:"ERROR", summary:"Fill required fields or update address", duration:5000});
       //this.buttonTypeQuote = "btn-danger";
     }
@@ -258,9 +254,6 @@ export class DashboardComponent {
 
   submitRequest() {
 
-    //once user inputs gallons and delivery date then submit request then it would automatically populate it with delivery address, suggested price, and total amount due --> then there would be a popup that comes up that says confirm or cancel to be added to order history
-    //resets the form and then adds to the quote history
-
     // this.orderObj.orderNumber = Math.floor(Math.random() * 11000);
     // this.orderObj.gallonsOrdered = this.dashboardForm.controls['gallons'].value;
     // this.orderObj.deliveryAddress = this.dashboardForm.controls['addressOne'].value;
@@ -270,26 +263,30 @@ export class DashboardComponent {
     // this.orderObj.clientID = LoginComponent.userDataLogin.clientID;
 
     this.submitOrderObj = this.orderObj;
+    //alert(JSON.stringify(this.submitOrderObj));
 
+    this.localSt.store('orderInfo', this.submitOrderObj)
 
     if (this.dashboardForm.controls['gallons'].value > 0 &&  this.dashboardForm.controls['addressOne'].value != "" && this.dashboardForm.controls['deliveryDate'].value != ""){
       this.auth.addOrder(this.orderObj)
       .subscribe(res => {
-        //alert(res.message);
         this.toast.info({detail:"SUCCESS", summary:res.message, duration:5000});
+
         this.dashboardForm.controls['gallons'].reset();
         this.dashboardForm.controls['deliveryDate'].reset();
+
       })
     }else{
       this.toast.error({detail:"ERROR", summary:"Request Quote", duration:5000});
     }
     
 
-      //this.localSt.clear('orderInfo');
+    //this.localSt.clear('orderInfo');
+    this.localSt.clear('orderInfo');
 
     //location.reload();
 
-    //I might need to have it to where gallon changes each time the gallons get incremented or not some might need a refresh idk
+
   }
 
   getCurUserOrders() {

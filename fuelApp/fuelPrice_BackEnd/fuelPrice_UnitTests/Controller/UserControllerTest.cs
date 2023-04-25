@@ -238,18 +238,6 @@ namespace fuelPrice_UnitTests.Controller
 
         }
 
-        [Fact]
-        public void GetCurUserOrders_ActionExecutes_ReturnsNotFound()
-        {
-
-            //Arrange
-            //Act
-            var result = controller.GetCurUserOrders(-1);
-  
-            //Assert
-            Assert.IsType<NotFoundObjectResult>(result as NotFoundObjectResult);
-
-        }
 
 
         [Fact]

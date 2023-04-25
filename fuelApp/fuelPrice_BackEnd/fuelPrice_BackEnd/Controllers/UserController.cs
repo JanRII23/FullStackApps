@@ -32,18 +32,18 @@ namespace fuelPrice_BackEnd.Controllers
                 return BadRequest();
             }
 
-            var user = await _authContext.Users.FirstOrDefaultAsync(x => x.userName == userObj.userName && x.password == userObj.password);
-            //var user = await _authContext.Users.FirstOrDefaultAsync(x => x.userName == userObj.userName); //passwordhasher
+            /*var user = await _authContext.Users.FirstOrDefaultAsync(x => x.userName == userObj.userName && x.password == userObj.password);*/
+            var user = await _authContext.Users.FirstOrDefaultAsync(x => x.userName == userObj.userName); //passwordhasher
 
             if (user == null)
             {
                 return NotFound(new { Message = "User Not Found or Password Wrong!" });
             }
 
-            /*  if (!PasswordHasher.VerifyPassword(userObj.password, user.password))
-              {
-                  return NotFound(new { Message = "Password Incorrect!" }); //passwordhasher
-              }*/
+            if (!PasswordHasher.VerifyPassword(userObj.password, user.password))
+            {
+                return NotFound(new { Message = "Password Incorrect!" }); //passwordhasher
+            }
 
             return Ok(new
             {
@@ -75,8 +75,8 @@ namespace fuelPrice_BackEnd.Controllers
                 return BadRequest(new { Message = pass.ToString() });
             }
 
-            /*  userObj.password = PasswordHasher.HashPassword(userObj.password);
-              userObj.passwordVerification = userObj.password;*/ //passwordhasher
+            userObj.password = PasswordHasher.HashPassword(userObj.password);
+            userObj.passwordVerification = userObj.password; //passwordhasher
 
             userObj.accessLevel = 0;
             await _authContext.Users.AddAsync(userObj);
@@ -171,10 +171,6 @@ namespace fuelPrice_BackEnd.Controllers
         public IActionResult GetQuote([FromBody] Pricing orderObj)
         {
 
-           // this should technically only receive gallons, delivery address, delivery date but populates into database setting pricepergallaon, totalDue as null
-
-            // I could just set object properties and return entire object
-
             if (orderObj == null)
             {
                 return BadRequest();
@@ -212,8 +208,7 @@ namespace fuelPrice_BackEnd.Controllers
 
                 });
 
-                //should return suggestd price and total amount due and populate to the form on refresh and all values should be there and then on submit reset form
-                //but on refresh should still keep properties before submitting
+ 
             }
         }
 
@@ -258,17 +253,20 @@ namespace fuelPrice_BackEnd.Controllers
                 return BadRequest();
             }
             else
-            { //once get request is done and valid on this click it finds the first instance of orderID and then updates it 
-
-                _authContext.Orders.AddAsync(orderObj);
+            {
+                _authContext.Orders.Add(orderObj);
                 _authContext.SaveChangesAsync();
+                _authContext.Dispose();
 
                 return Ok(new
                 {
                     StatusCode = 200,
                     Message = "Order Added"
                 });
+
             }
+
+
         }
 
 
@@ -280,15 +278,6 @@ namespace fuelPrice_BackEnd.Controllers
 
             var allOrders = _authContext.Orders.AsQueryable().Where(x => x.clientID == clientID);
 
-            if (allOrders.IsNullOrEmpty())
-            {
-                return NotFound(new
-                {
-                    StatusCode = 404,
-                    Message = "User/Account does not exists"
-                });
-                //return BadRequest();
-            }
 
             return Ok(new
             {
@@ -296,8 +285,6 @@ namespace fuelPrice_BackEnd.Controllers
                 orderDetails = allOrders
             });
         }
-
-        //deleteOrders, getOrders, get_id from admin side
 
     }
 

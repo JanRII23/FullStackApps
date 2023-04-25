@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 
 @Component({
@@ -22,7 +23,9 @@ export class LoginComponent {
   test: number = 33;
 
 
-  constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router, private  toast: NgToastService) {
+  constructor(private fb: FormBuilder, private auth: AuthenticationService, private router: Router, private  toast: NgToastService,  private localSt: LocalStorageService) {
+    this.localSt.clear('userInfo');
+    this.localSt.clear('orderInfo');
     
   }
 
