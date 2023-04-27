@@ -244,7 +244,7 @@ namespace fuelPrice_BackEnd.Controllers
         }
 
 
-        [HttpPost("addOrder")]
+        /*[HttpPost("addOrder")]
         public IActionResult AddOrder([FromBody] Pricing orderObj)
         {
 
@@ -254,7 +254,13 @@ namespace fuelPrice_BackEnd.Controllers
             }
             else
             {
-                _authContext.Orders.Add(orderObj);
+            }
+
+
+
+
+
+            _authContext.Orders.Add(orderObj);
                 _authContext.SaveChangesAsync();
                 _authContext.Dispose();
 
@@ -264,10 +270,38 @@ namespace fuelPrice_BackEnd.Controllers
                     Message = "Order Added"
                 });
 
+
+
+        }*/
+
+        [HttpPost("addOrder")]
+        public async Task<IActionResult> AddOrder([FromBody] Pricing orderObj)
+        {
+            if (orderObj == null)
+            {
+                return BadRequest();
             }
 
-
+            try
+            {
+                _authContext.Orders.Add(orderObj);
+                await _authContext.SaveChangesAsync();
+                return Ok(new
+                {
+                    StatusCode = 200,
+                    Message = "Order Added"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error adding order: {ex.Message}");
+            }
+            finally
+            {
+                _authContext.Dispose();
+            }
         }
+
 
 
         [HttpGet("GetCurUserOrders")]

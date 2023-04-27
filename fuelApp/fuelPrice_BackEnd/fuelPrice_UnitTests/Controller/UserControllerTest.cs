@@ -174,7 +174,7 @@ namespace fuelPrice_UnitTests.Controller
         }
 
         [Fact]
-        public void AddOrder_ActionExecutes_ReturnsNotNull()
+        public async Task AddOrder_ActionExecutes_ReturnsNotNull()
         {
 
             //Arrange
@@ -199,26 +199,14 @@ namespace fuelPrice_UnitTests.Controller
         }
 
         [Fact]
-        public void AddOrder_ActionExecutes_ReturnsNull()
+        public async Task AddOrder_ActionExecutes_ReturnsNull()
         {
 
             //Arrange
-            var pricingModel = new Pricing
-            {
-                orderID = 2,
-                orderNumber = 205621,
-                gallonsOrdered = 3,
-                deliveryAddress = "Fury Lane",
-                deliveryDate = "3/22/23",
-                pricePerGallon = 10,
-                totalAmountDue = 20,
-                clientID = 1
-            };
-
-            pricingModel = null;
+            Pricing pricingModel = null;
 
             //Act
-            var result = controller.AddOrder(pricingModel);
+            var result = await controller.AddOrder(pricingModel);
 
             //Assert
             Assert.IsType<BadRequestResult>(result as BadRequestResult);

@@ -58,7 +58,7 @@
             <form class="row g-2 p-2" [formGroup]="dashboardForm" *ngIf="userAccount">
               <div class="col-12 d-flex justify-content-between align-items-center">
                 <h1 class="text-decoration-underline">My Account</h1>
-                <button (click)="refreshProfileUpdate()" type="submit" class="btn btn-success">Update
+                <button (click)="refreshProfileUpdate()" type="submit" class="btn {{buttonTypeUpdate}}">Update
                   Profile</button>
               </div>
 
@@ -69,7 +69,7 @@
                     *ngIf="dashboardForm.controls['firstName'].dirty && dashboardForm.hasError('required', 'firstName')"
                     class="text-danger">*First Name is required</small></label>
                 <input type="text" class="form-control border border-success" id="firstName" formControlName="firstName"
-                  maxlength="25">
+                  maxlength="25" (mouseleave)="buttonUpdate()">
 
               </div>
 
@@ -79,7 +79,7 @@
                     *ngIf="dashboardForm.controls['lastName'].dirty && dashboardForm.hasError('required', 'lastName')"
                     class="text-danger">*Last Name is required</small></label>
                 <input type="text" class="form-control border border-success" formControlName="lastName" id="lastName"
-                  maxlength="25">
+                  maxlength="25" (mouseleave)="buttonUpdate()">
 
               </div>
 
@@ -89,7 +89,7 @@
                     *ngIf="dashboardForm.controls['addressOne'].dirty && dashboardForm.hasError('required', 'addressOne')"
                     class="text-danger">*Address One is required</small></label>
                 <input type="text" formControlName="addressOne" class="form-control border border-success"
-                  id="inputAddress1" maxlength="100">
+                  id="inputAddress1" maxlength="100" (mouseleave)="buttonUpdate()">
 
               </div>
 
@@ -104,7 +104,7 @@
                     *ngIf="dashboardForm.controls['city'].dirty && dashboardForm.hasError('required', 'city')"
                     class="text-danger">*City is required</small></label>
                 <input type="text" class="form-control border border-success" formControlName="city" id="inputCity"
-                  maxlength="100">
+                  maxlength="100" (mouseleave)="buttonUpdate()">
               </div>
 
               <div class="col-md-4"
@@ -112,7 +112,7 @@
                 <label for="inputState" class="form-label">State <small
                     *ngIf="dashboardForm.controls['state'].dirty && dashboardForm.hasError('required', 'state')"
                     class="text-danger">*State is required</small></label>
-                <select id="inputState" class="form-select border border-success" formControlName="state">
+                <select id="inputState" class="form-select border border-success" formControlName="state" (mouseleave)="buttonUpdate()">
                   <option value="default">----</option>
                   <option *ngFor="let item of states | keyvalue" [value]="item.value">{{item.key}}</option>
 
@@ -125,7 +125,7 @@
                     *ngIf="dashboardForm.controls['zip'].dirty && dashboardForm.hasError('required', 'zip')"
                     class="text-danger">*Zip is required</small></label>
                 <input type="number" class="form-control border border-success" formControlName="zip" id="inputZip"
-                  minlength="5" maxlength="9">
+                  minlength="5" maxlength="9" (mouseleave)="buttonUpdate()">
               </div>
 
             </form>
@@ -207,8 +207,8 @@
                     <td>{{order.gallonsOrdered}}</td>
                     <td>{{order.deliveryAddress}}</td>
                     <td>{{order.deliveryDate}}</td>
-                    <td>${{order.pricePerGallon}}</td>
-                    <td>${{order.totalAmountDue}}</td>
+                    <td>${{order.pricePerGallon.toFixed(3)}}</td>
+                    <td>${{order.totalAmountDue.toFixed(3)}}</td>
                   </tr>
                 </tbody>
               </table>

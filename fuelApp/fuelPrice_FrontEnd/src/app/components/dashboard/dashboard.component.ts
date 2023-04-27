@@ -8,6 +8,7 @@ import { UserModel } from './user.model';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { NgToastService } from 'ng-angular-popup';
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -42,6 +43,7 @@ export class DashboardComponent {
 
   buttonTypeQuote: string = "btn-danger";
   buttonTypeSubmit: string = "btn-danger";
+  buttonTypeUpdate: string = "btn-success";
 
   states = {
     "Alabama": "AL",
@@ -112,6 +114,7 @@ export class DashboardComponent {
 
       this.orderObj = orderData;
       this.buttonTypeSubmit = "btn-success";
+      this.buttonTypeQuote = "btn-danger";
       //this.localSt.clear('orderInfo');
 
     }
@@ -189,6 +192,17 @@ export class DashboardComponent {
 
   refreshProfileUpdate() {
 
+    const zip = this.dashboardForm.controls['zip'].value;
+
+   if(!this.dashboardForm.controls['firstName'].value || !this.dashboardForm.controls['lastName'].value ||   !this.dashboardForm.controls['addressOne'].value ||
+   !this.dashboardForm.controls['city'].value || !this.dashboardForm.controls['state'].value || !this.dashboardForm.controls['zip'].value) {
+
+    this.toast.error({detail:"ERROR", summary:"Green Border Fields Required", duration:5000});
+ 
+  } else if(zip < 10000 || zip > 999999999){
+    this.toast.error({detail:"ERROR", summary:"Invalid Zip", duration:5000});
+  }  
+  else{
     this.userObj.clientID = LoginComponent.userDataLogin.clientID;
     this.userObj.userName = LoginComponent.userDataLogin.userName;
     this.userObj.password = LoginComponent.userDataLogin.password;
@@ -208,17 +222,33 @@ export class DashboardComponent {
       .subscribe(res => {
         //alert("Updated Successfully");
               
-    this.toast.info({detail:"SUCCESS", summary:res.message, duration:5000});
+        this.toast.info({detail:"SUCCESS", summary:res.message, duration:5000});
       })
   
     //window.location.reload();
 
+  }
+  }
+
+  buttonUpdate(){
+
+  //   if(!this.dashboardForm.controls['firstName'].value || !this.dashboardForm.controls['lastName'].value ||   !this.dashboardForm.controls['addressOne'].value || !this.dashboardForm.controls['city'].value || !this.dashboardForm.controls['state'].value || !this.dashboardForm.controls['zip'].value) {
+
+  //   this.toast.error({detail:"ERROR", summary:"Green Border Fields Required", duration:5000});
+  //   this.buttonTypeUpdate = "btn-danger";
+  // }else{
+  //   this.buttonTypeUpdate = "btn-success";
+
+    
+  // }
 
   }
 
   getRequest() {
+
+    const deliveryDateValue = this.dashboardForm.controls['deliveryDate'].value;
     
-    if (this.dashboardForm.controls['gallons'].value > 0 &&  this.dashboardForm.controls['addressOne'].value != "" && this.dashboardForm.controls['deliveryDate'].value != ""){
+    if (this.dashboardForm.controls['gallons'].value > 0 &&  this.dashboardForm.controls['addressOne'].value != "" && this.dashboardForm.controls['deliveryDate'].value != "" && Date.parse(deliveryDateValue) > Date.now()){
       this.orderObj.orderNumber = Math.floor(Math.random() * 21000);
       this.orderObj.gallonsOrdered = this.dashboardForm.controls['gallons'].value;
       this.orderObj.deliveryAddress = this.dashboardForm.controls['addressOne'].value + " " + this.dashboardForm.controls['city'].value + " " + this.dashboardForm.controls['state'].value + " " + this.dashboardForm.controls['zip'].value.toString();
@@ -235,16 +265,26 @@ export class DashboardComponent {
         window.location.reload();
       })
 
+    } else if(this.dashboardForm.controls['gallons'].value <= 0)
+    {
+      this.toast.error({detail:"ERROR", summary:"Gallon order invalid", duration:5000});
+    }
+    else if (Date.parse(deliveryDateValue) <= Date.now()){
+      this.toast.error({detail:"ERROR", summary:"Order date invalid", duration:5000});
     }
     else{
-      this.toast.error({detail:"ERROR", summary:"Fill required fields or update address", duration:5000});
+      this.toast.error({detail:"ERROR", summary:"Fill required fields or update address ", duration:5000});
       //this.buttonTypeQuote = "btn-danger";
     }
   }
 
   buttonChange(){
+
+    // this.buttonTypeSubmit = "btn-success
+
+    const deliveryDateValue = this.dashboardForm.controls['deliveryDate'].value;
     
-    if (this.dashboardForm.controls['gallons'].value > 0 &&  this.dashboardForm.controls['addressOne'].value != "" && this.dashboardForm.controls['deliveryDate'].value != ""){
+    if (this.dashboardForm.controls['gallons'].value > 0 &&  this.dashboardForm.controls['addressOne'].value != "" && this.dashboardForm.controls['deliveryDate'].value != "" && Date.parse(deliveryDateValue) > Date.now()){
       this.buttonTypeQuote = "btn-success";
     }
     else{
@@ -264,10 +304,17 @@ export class DashboardComponent {
 
     this.submitOrderObj = this.orderObj;
     //alert(JSON.stringify(this.submitOrderObj));
+    const deliveryDateValue = this.dashboardForm.controls['deliveryDate'].value;
 
     this.localSt.store('orderInfo', this.submitOrderObj)
 
-    if (this.dashboardForm.controls['gallons'].value > 0 &&  this.dashboardForm.controls['addressOne'].value != "" && this.dashboardForm.controls['deliveryDate'].value != ""){
+
+   if (this.orderObj.totalAmountDue <= 0 || this.orderObj.pricePerGallon <= 0){
+    this.toast.error({detail:"ERROR", summary:"Request Full Quote", duration:5000});
+    this.buttonTypeSubmit = "btn-danger";
+   }
+
+   else if (this.dashboardForm.controls['gallons'].value > 0 &&  this.dashboardForm.controls['addressOne'].value != "" && this.dashboardForm.controls['deliveryDate'].value != "" && Date.parse(deliveryDateValue) > Date.now()){
       this.auth.addOrder(this.orderObj)
       .subscribe(res => {
         this.toast.info({detail:"SUCCESS", summary:res.message, duration:5000});
@@ -276,8 +323,10 @@ export class DashboardComponent {
         this.dashboardForm.controls['deliveryDate'].reset();
 
       })
-    }else{
-      this.toast.error({detail:"ERROR", summary:"Request Quote", duration:5000});
+    }   
+    else{
+      this.toast.error({detail:"ERROR", summary:"Invalid Order Requirements", duration:5000});
+      this.buttonTypeSubmit = "btn-danger";
     }
     
 
