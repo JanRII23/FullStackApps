@@ -1,0 +1,16 @@
+{
+    "name": "atakaii/phpmvc-framework",
+    "autoload": {
+        "psr-4": {
+            "Atakaii\\PhpmvcFramework\\": "src/",
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "atakaii",
+            "email": "jrejasii@gmail.com"
+        }
+    ],
+    "require": {}
+}
